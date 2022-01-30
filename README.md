@@ -24,6 +24,8 @@
 
 A modular telegram Python bot running on python3 with an sqlalchemy, mongodb database.
 
+![Alt](https://repobeats.axiom.co/api/embed/14f3ae8bd55c2c7a27a6c209ea7f8b82307949fb.svg "Repobeats analytics image")
+
 <details>
 	<summary>Credit's</summary>
 	<br>
@@ -42,4 +44,3 @@ A modular telegram Python bot running on python3 with an sqlalchemy, mongodb dat
 <a href="https://github.com/Paul Larsen"> <img src="https://img.shields.io/badge/Paul Larsen-Github-magenta?style=for-the-badge&logo=github" alt="Paul Larsen Github" /> </a>
 </h1>
 
-![Alt](https://repobeats.axiom.co/api/embed/14f3ae8bd55c2c7a27a6c209ea7f8b82307949fb.svg "Repobeats analytics image")
