@@ -23,6 +23,7 @@ psutil
 aiohttp
 Pillow
 CurrencyConverter
+googletrans
 google-trans-new
 jikanpy
 speedtest-cli
