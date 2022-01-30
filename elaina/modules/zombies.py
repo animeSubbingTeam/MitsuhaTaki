@@ -20,15 +20,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import asyncio
 
 from asyncio import sleep
+
 from telethon import events
 from telethon.errors import ChatAdminRequiredError, UserAdminInvalidError
 from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights, ChannelParticipantsAdmins
+from telethon.tl.types import ChannelParticipantsAdmins, ChatBannedRights
 
-from elaina import telethn, OWNER_ID, DEV_USERS, DRAGONS, DEMONS
+from elaina import DEMONS, DEV_USERS, DRAGONS, OWNER_ID, telethn
 
 # =================== CONSTANT ===================
 
@@ -59,6 +59,7 @@ UNBAN_RIGHTS = ChatBannedRights(
 OFFICERS = [OWNER_ID] + DEV_USERS + DRAGONS + DEMONS
 
 # Check if user has admin rights
+
 
 async def is_administrator(user_id: int, message):
     admin = False
@@ -117,5 +118,6 @@ async def rm_deletedacc(show):
             f"\n`{del_a}` **Admin zombies not deleted.**"
         )
     await memek.edit(del_status)
+
 
 __mod_name__ = "Zombies"

@@ -21,20 +21,13 @@
 # SOFTWARE.
 
 import re
-import html
-import rapidjson as json
 import time
-import yaml
 from datetime import datetime
 
 from bs4 import BeautifulSoup
 from hurry.filesize import size as sizee
 from requests import get
-from telegram import InlineKeyboardButton
-from telegram import InlineKeyboardMarkup
-from telegram import ParseMode
-from telegram import Update 
-from telegram import Bot ,Message
+from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext
 from ujson import loads
@@ -324,130 +317,167 @@ def los(update: Update, context: CallbackContext) -> str:
         )
 
 
-
-
 @typing_action
-def havoc(bot: Bot, update: Update): 
+def havoc(bot: Bot, update: Update):
 
     message = update.effective_message
-    device = message.text[len('/havoc '):]
-    fetch = get(f'https://download.havoc-os.com/json')
+    device = message.text[len("/havoc ") :]
+    fetch = get(f"https://download.havoc-os.com/json")
 
-    if device == '':
+    if device == "":
         reply_text = "Please type your device **codename** into it!\nFor example, `/havoc lavender`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        message.reply_text(
+            reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+        )
         return
 
     if fetch.status_code == 200:
         usr = fetch.json()
-        response = usr['response'][0]
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
+        response = usr["response"][0]
+        filename = response["filename"]
+        url = response["url"]
+        buildsize_a = response["size"]
         buildsize_b = sizee(int(buildsize_a))
-        version = response['version']
+        version = response["version"]
 
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`")
+        reply_text = (
+            f"*Download:* [{filename}]({url})\n"
+            f"*Build size:* `{buildsize_b}`\n"
+            f"*Version:* `{version}`"
+        )
 
         keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        message.reply_text(
+            reply_text,
+            reply_markup=InlineKeyboardMarkup(keyboard),
+            parse_mode=ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
+        )
         return
 
     elif fetch.status_code == 404:
         reply_text = "Device not found."
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
- 
- 
-    
+    message.reply_text(
+        reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+    )
+
+
 @typing_action
 def pixys(bot: Bot, update: Update):
     message = update.effective_message
-    device = message.text[len('/pixys '):]
+    device = message.text[len("/pixys ") :]
 
-    if device == '':
+    if device == "":
         reply_text = "Please type your device **codename** into it!\nFor example, `/pixys tissot`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        message.reply_text(
+            reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+        )
         return
 
-    fetch = get(f'https://raw.githubusercontent.com/PixysOS-Devices/official_devices/master/{device}/build.json')
+    fetch = get(
+        f"https://raw.githubusercontent.com/PixysOS-Devices/official_devices/master/{device}/build.json"
+    )
     if fetch.status_code == 200:
         usr = fetch.json()
-        response = usr['response'][0]
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
+        response = usr["response"][0]
+        filename = response["filename"]
+        url = response["url"]
+        buildsize_a = response["size"]
         buildsize_b = sizee(int(buildsize_a))
-        romtype = response['romtype']
-        version = response['version']
+        romtype = response["romtype"]
+        version = response["version"]
 
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`\n"
-                      f"*Rom Type:* `{romtype}`")
+        reply_text = (
+            f"*Download:* [{filename}]({url})\n"
+            f"*Build size:* `{buildsize_b}`\n"
+            f"*Version:* `{version}`\n"
+            f"*Rom Type:* `{romtype}`"
+        )
 
         keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        message.reply_text(
+            reply_text,
+            reply_markup=InlineKeyboardMarkup(keyboard),
+            parse_mode=ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
+        )
         return
 
     elif fetch.status_code == 404:
         reply_text = "Device not found."
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-
-
+    message.reply_text(
+        reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+    )
 
 
 @typing_action
 def pearl(bot: Bot, update: Update):
     message = update.effective_message
-    device = message.text[len('/pearl '):]
+    device = message.text[len("/pearl ") :]
 
-    if device == '':
-        reply_text = "Please type your device **codename** into it!\nFor example, `/pearl mido`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+    if device == "":
+        reply_text = (
+            "Please type your device **codename** into it!\nFor example, `/pearl mido`"
+        )
+        message.reply_text(
+            reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+        )
         return
 
-    fetch = get(f'https://raw.githubusercontent.com/PearlOS/OTA/master/{device}.json')
+    fetch = get(f"https://raw.githubusercontent.com/PearlOS/OTA/master/{device}.json")
     if fetch.status_code == 200:
         usr = fetch.json()
-        response = usr['response'][0]
-        maintainer = response['maintainer']
-        romtype = response['romtype']
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
+        response = usr["response"][0]
+        maintainer = response["maintainer"]
+        romtype = response["romtype"]
+        filename = response["filename"]
+        url = response["url"]
+        buildsize_a = response["size"]
         buildsize_b = sizee(int(buildsize_a))
-        version = response['version']
-        xda = response['xda']
+        version = response["version"]
+        xda = response["xda"]
 
-        if xda == '':
-            reply_text = (f"*Download:* [{filename}]({url})\n"
-                          f"*Build size:* `{buildsize_b}`\n"
-                          f"*Version:* `{version}`\n"
-                          f"*Maintainer:* `{maintainer}`\n"
-                          f"*ROM Type:* `{romtype}`")
+        if xda == "":
+            reply_text = (
+                f"*Download:* [{filename}]({url})\n"
+                f"*Build size:* `{buildsize_b}`\n"
+                f"*Version:* `{version}`\n"
+                f"*Maintainer:* `{maintainer}`\n"
+                f"*ROM Type:* `{romtype}`"
+            )
 
             keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-            message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+            message.reply_text(
+                reply_text,
+                reply_markup=InlineKeyboardMarkup(keyboard),
+                parse_mode=ParseMode.MARKDOWN,
+                disable_web_page_preview=True,
+            )
             return
 
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`\n"
-                      f"*Maintainer:* `{maintainer}`\n"
-                      f"*ROM Type:* `{romtype}`\n"
-                      f"*XDA Thread:* [Link]({xda})")
+        reply_text = (
+            f"*Download:* [{filename}]({url})\n"
+            f"*Build size:* `{buildsize_b}`\n"
+            f"*Version:* `{version}`\n"
+            f"*Maintainer:* `{maintainer}`\n"
+            f"*ROM Type:* `{romtype}`\n"
+            f"*XDA Thread:* [Link]({xda})"
+        )
 
         keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        message.reply_text(
+            reply_text,
+            reply_markup=InlineKeyboardMarkup(keyboard),
+            parse_mode=ParseMode.MARKDOWN,
+            disable_web_page_preview=True,
+        )
         return
 
     elif fetch.status_code == 404:
         reply_text = "Device not found."
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-
-
+    message.reply_text(
+        reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True
+    )
 
 
 @typing_action
@@ -482,7 +512,7 @@ def pe(update: Update, context: CallbackContext) -> str:
         reply_text = f"*Download :* [{filename}]({url})\n"
         reply_text += f"*Build Size :* `{buildsize_b}`\n"
         reply_text += f"*Version :* `{version}`\n"
-        
+
         keyboard = [
             [InlineKeyboardButton(text="Click Here To Downloads", url=f"{url}")]
         ]
@@ -500,6 +530,7 @@ def pe(update: Update, context: CallbackContext) -> str:
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
         )
+
 
 @typing_action
 def gsi(update: Update, _: CallbackContext):

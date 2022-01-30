@@ -21,12 +21,12 @@
 # SOFTWARE.
 
 import io
-from elaina.events import register
-from elaina import telethn as tbot
+
 from telethon import types
-from telethon import events
 from telethon.tl import functions
-from telethon.tl.types import *
+
+from elaina import telethn as tbot
+from elaina.events import register
 
 
 async def is_register_admin(chat, user):

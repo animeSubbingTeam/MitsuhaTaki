@@ -20,14 +20,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
 import datetime
+import os
 
-from telethon import events
 from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler
+from telethon import events
 
-from elaina import telethn, dispatcher
+from elaina import dispatcher, telethn
 from elaina.modules.helper_funcs.chat_status import dev_plus
 
 DEBUG_MODE = False

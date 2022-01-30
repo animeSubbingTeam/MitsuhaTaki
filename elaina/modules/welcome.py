@@ -26,30 +26,7 @@ import re
 import time
 from functools import partial
 from io import BytesIO
-import elaina.modules.sql.welcome_sql as sql
-from elaina import (
-    DEV_USERS,
-    OWNER_ID,
-    DRAGONS,
-    DEMONS,
-    WOLVES,
-    sw,
-    LOGGER,
-    dispatcher,
-)
-from elaina.modules.helper_funcs.chat_status import (
-    is_user_ban_protected,
-    user_admin,
-)
-from elaina.modules.helper_funcs.misc import build_keyboard, revert_buttons
-from elaina.modules.helper_funcs.msg_types import get_welcome_type
-from elaina.modules.helper_funcs.handlers import MessageHandlerChecker
-from elaina.modules.helper_funcs.string_handling import (
-    escape_invalid_curly_brackets,
-    markdown_parser,
-)
-from elaina.modules.log_channel import loggable
-from elaina.modules.sql.global_bans_sql import is_user_gbanned
+
 from telegram import (
     ChatPermissions,
     InlineKeyboardButton,
@@ -66,6 +43,19 @@ from telegram.ext import (
     MessageHandler,
 )
 from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
+
+import elaina.modules.sql.welcome_sql as sql
+from elaina import DEMONS, DEV_USERS, DRAGONS, LOGGER, OWNER_ID, WOLVES, dispatcher, sw
+from elaina.modules.helper_funcs.chat_status import is_user_ban_protected, user_admin
+from elaina.modules.helper_funcs.handlers import MessageHandlerChecker
+from elaina.modules.helper_funcs.misc import build_keyboard, revert_buttons
+from elaina.modules.helper_funcs.msg_types import get_welcome_type
+from elaina.modules.helper_funcs.string_handling import (
+    escape_invalid_curly_brackets,
+    markdown_parser,
+)
+from elaina.modules.log_channel import loggable
+from elaina.modules.sql.global_bans_sql import is_user_gbanned
 
 VALID_WELCOME_FORMATTERS = [
     "first",
@@ -93,6 +83,7 @@ VERIFIED_USER_WAITLIST = {}
 CAPTCHA_ANS_DICT = {}
 
 from multicolorcaptcha import CaptchaGenerator
+
 
 # do not async
 def send(update, message, keyboard, backup_message):
@@ -178,6 +169,7 @@ def send(update, message, keyboard, backup_message):
             LOGGER.exception()
     return msg
 
+
 @loggable
 def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
     bot, job_queue = context.bot, context.job_queue
@@ -220,7 +212,8 @@ def new_member(update: Update, context: CallbackContext):  # sourcery no-metrics
             # Give the owner a special welcome
             if new_mem.id == OWNER_ID:
                 update.effective_message.reply_text(
-                    f"Welcome to {html.escape(chat.title)} my king.", reply_to_message_id=reply
+                    f"Welcome to {html.escape(chat.title)} my king.",
+                    reply_to_message_id=reply,
                 )
                 welcome_log = (
                     f"{html.escape(chat.title)}\n"
@@ -724,7 +717,12 @@ def welcome(update: Update, context: CallbackContext):
                 keyb = build_keyboard(buttons)
                 keyboard = InlineKeyboardMarkup(keyb)
 
-                send(update, welcome_m, keyboard, random.choice(sql.DEFAULT_WELCOME_MESSAGES))
+                send(
+                    update,
+                    welcome_m,
+                    keyboard,
+                    random.choice(sql.DEFAULT_WELCOME_MESSAGES),
+                )
         else:
             buttons = sql.get_welc_buttons(chat.id)
             if noformat:
@@ -786,7 +784,12 @@ def goodbye(update: Update, context: CallbackContext):
                 keyb = build_keyboard(buttons)
                 keyboard = InlineKeyboardMarkup(keyb)
 
-                send(update, goodbye_m, keyboard, random.choice(sql.DEFAULT_GOODBYE_MESSAGES))
+                send(
+                    update,
+                    goodbye_m,
+                    keyboard,
+                    random.choice(sql.DEFAULT_GOODBYE_MESSAGES),
+                )
 
         elif noformat:
             ENUM_FUNC_MAP[goodbye_type](chat.id, goodbye_m)
@@ -842,7 +845,9 @@ def reset_welcome(update: Update, context: CallbackContext) -> str:
     chat = update.effective_chat
     user = update.effective_user
 
-    sql.set_custom_welcome(chat.id, None, random.choice(sql.DEFAULT_WELCOME_MESSAGES), sql.Types.TEXT)
+    sql.set_custom_welcome(
+        chat.id, None, random.choice(sql.DEFAULT_WELCOME_MESSAGES), sql.Types.TEXT
+    )
     update.effective_message.reply_text(
         "Successfully reset welcome message to default!"
     )
@@ -883,7 +888,9 @@ def reset_goodbye(update: Update, context: CallbackContext) -> str:
     chat = update.effective_chat
     user = update.effective_user
 
-    sql.set_custom_gdbye(chat.id, random.choice(sql.DEFAULT_GOODBYE_MESSAGES), sql.Types.TEXT)
+    sql.set_custom_gdbye(
+        chat.id, random.choice(sql.DEFAULT_GOODBYE_MESSAGES), sql.Types.TEXT
+    )
     update.effective_message.reply_text(
         "Successfully reset goodbye message to default!"
     )

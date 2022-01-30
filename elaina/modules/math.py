@@ -23,10 +23,11 @@
 import math
 
 import pynewtonmath as newton
+from telegram import Update
+from telegram.ext import CallbackContext
+
 from elaina import dispatcher
 from elaina.modules.disable import DisableAbleCommandHandler
-from telegram import Update
-from telegram.ext import CallbackContext, run_async
 
 
 def simplify(update: Update, context: CallbackContext):

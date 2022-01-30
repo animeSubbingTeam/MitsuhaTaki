@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 from envparse import env
+
 from elaina import LOGGER
 
 DEFAULTS = {

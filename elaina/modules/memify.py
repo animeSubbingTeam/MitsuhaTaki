@@ -20,11 +20,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import textwrap
 import os
-from PIL import Image, ImageFont, ImageDraw
+import textwrap
+
+from PIL import Image, ImageDraw, ImageFont
+
+from elaina import telethn as bot
 from elaina.events import register
-from elaina import LOGGER, TEMP_DOWNLOAD_DIRECTORY, telethn as bot
 
 
 @register(pattern="^/mmf ?(.*)")
@@ -32,7 +34,9 @@ async def handler(event):
     if event.fwd_from:
         return
     if not event.reply_to_msg_id:
-        await event.reply("`Provide Some Text To Draw! And Reply To Image/Stickers EXAMPLE: /mmf text`")
+        await event.reply(
+            "`Provide Some Text To Draw! And Reply To Image/Stickers EXAMPLE: /mmf text`"
+        )
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
@@ -56,7 +60,6 @@ async def handler(event):
 async def drawText(image_path, text):
     img = Image.open(image_path)
     os.remove(image_path)
-    shadowcolor = "black"
     i_width, i_height = img.size
     if os.name == "nt":
         fnt = "ariel.ttf"

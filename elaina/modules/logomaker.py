@@ -20,13 +20,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import glob
 import os
 import random
-import glob
+
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterPhotos
+
+from elaina import telethn as tbot
+from elaina import ubot2
 from elaina.events import register
-from elaina import telethn as tbot, ubot2
 
 
 def mediainfo(media):
@@ -126,8 +129,9 @@ async def logo_gen(event):
     )
     x = (image_width - w) / 2
     y = (image_height - h) / 2
-    draw.text((x, y), name, font=font, fill="white",
-              stroke_width=strke, stroke_fill="black")
+    draw.text(
+        (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
+    )
     flnme = f"logo.png"
     img.save(flnme, "png")
     await xx.edit("`Uploading`")
@@ -141,7 +145,7 @@ async def logo_gen(event):
         os.remove(flnme)
         await xx.delete()
     if os.path.exists(bg_):
-        os.remove(bg_) 
+        os.remove(bg_)
     if os.path.exists(font_):
         if not font_.startswith("./elaina/resources/fonts"):
             os.remove(font_)
@@ -209,8 +213,9 @@ async def logo_(event):
     )
     x = (image_width - w) / 2
     y = (image_height - h) / 2
-    draw.text((x, y), name, font=font, fill="white",
-              stroke_width=strke, stroke_fill="black")
+    draw.text(
+        (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
+    )
     flnme = f"logo.png"
     img.save(flnme, "png")
     await xx.edit("`Uploading`")
@@ -224,10 +229,11 @@ async def logo_(event):
         os.remove(flnme)
         await xx.delete()
     if os.path.exists(bg_):
-        os.remove(bg_) 
+        os.remove(bg_)
     if os.path.exists(font_):
         if not font_.startswith("./elaina/resources/fonts"):
             os.remove(font_)
+
 
 __help__ = """
 *Commands For User*

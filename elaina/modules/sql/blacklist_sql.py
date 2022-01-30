@@ -22,9 +22,9 @@
 
 import threading
 
-from sqlalchemy import func, distinct, Column, String, UnicodeText, Integer
+from sqlalchemy import Column, Integer, String, UnicodeText, distinct, func
 
-from elaina.modules.sql import SESSION, BASE
+from elaina.modules.sql import BASE, SESSION
 
 
 class BlackListFilters(BASE):
@@ -118,8 +118,8 @@ def num_blacklist_chat_filters(chat_id):
     try:
         return (
             SESSION.query(BlackListFilters.chat_id)
-                .filter(BlackListFilters.chat_id == str(chat_id))
-                .count()
+            .filter(BlackListFilters.chat_id == str(chat_id))
+            .count()
         )
     finally:
         SESSION.close()
@@ -209,8 +209,8 @@ def migrate_chat(old_chat_id, new_chat_id):
     with BLACKLIST_FILTER_INSERTION_LOCK:
         chat_filters = (
             SESSION.query(BlackListFilters)
-                .filter(BlackListFilters.chat_id == str(old_chat_id))
-                .all()
+            .filter(BlackListFilters.chat_id == str(old_chat_id))
+            .all()
         )
         for filt in chat_filters:
             filt.chat_id = str(new_chat_id)

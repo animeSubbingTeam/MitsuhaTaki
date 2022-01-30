@@ -23,6 +23,11 @@
 import html
 from typing import Optional
 
+from telegram import Chat, ChatPermissions, Message, ParseMode, Update, User
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext, CommandHandler, Filters, MessageHandler
+from telegram.utils.helpers import mention_html, mention_markdown
+
 import elaina.modules.sql.blsticker_sql as sql
 from elaina import LOGGER, dispatcher
 from elaina.modules.connection import connected
@@ -31,13 +36,8 @@ from elaina.modules.helper_funcs.alternate import send_message
 from elaina.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from elaina.modules.helper_funcs.misc import split_message
 from elaina.modules.helper_funcs.string_handling import extract_time
-
 from elaina.modules.log_channel import loggable
 from elaina.modules.warns import warn
-from telegram import Chat, Message, ParseMode, Update, User, ChatPermissions
-from telegram.error import BadRequest
-from telegram.ext import CallbackContext, CommandHandler, Filters, MessageHandler
-from telegram.utils.helpers import mention_html, mention_markdown
 
 
 def blackliststicker(update: Update, context: CallbackContext):
@@ -70,12 +70,9 @@ def blackliststicker(update: Update, context: CallbackContext):
 
     split_text = split_message(sticker_list)
     for text in split_text:
-        if (
-            sticker_list
-            == "<b>List blacklisted stickers currently in {}:</b>\n".format(
-                chat_name,
-            ).format(html.escape(chat_name))
-        ):
+        if sticker_list == "<b>List blacklisted stickers currently in {}:</b>\n".format(
+            chat_name,
+        ).format(html.escape(chat_name)):
             send_message(
                 update.effective_message,
                 "There are no blacklist stickers in <b>{}</b>!".format(
@@ -114,7 +111,7 @@ def add_blackliststicker(update: Update, context: CallbackContext):
         added = 0
         for trigger in to_blacklist:
             try:
-                get = bot.getStickerSet(trigger)
+                bot.getStickerSet(trigger)
                 sql.add_to_stickers(chat_id, trigger.lower())
                 added += 1
             except BadRequest:
@@ -152,7 +149,7 @@ def add_blackliststicker(update: Update, context: CallbackContext):
             send_message(update.effective_message, "Sticker is invalid!")
             return
         try:
-            get = bot.getStickerSet(trigger)
+            bot.getStickerSet(trigger)
             sql.add_to_stickers(chat_id, trigger.lower())
             added += 1
         except BadRequest:

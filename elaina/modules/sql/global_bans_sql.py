@@ -21,9 +21,11 @@
 # SOFTWARE.
 
 import threading
-from elaina.modules.sql import BASE, SESSION
+
 from sqlalchemy import Boolean, Column, String, UnicodeText
 from sqlalchemy.sql.sqltypes import BigInteger
+
+from elaina.modules.sql import BASE, SESSION
 
 
 class GloballyBannedUsers(BASE):

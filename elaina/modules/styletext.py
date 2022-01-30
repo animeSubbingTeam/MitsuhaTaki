@@ -20,11 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from telegram import ParseMode
+
 from elaina import dispatcher
 from elaina.modules.disable import DisableAbleCommandHandler
 from elaina.modules.helper_funcs.alternate import typing_action
-from telegram import ParseMode
-from telegram.ext import run_async
 
 normiefont = [
     "a",
@@ -494,6 +494,7 @@ def lined(update, context):
         message.reply_to_message.reply_text(string)
     else:
         message.reply_text(string)
+
 
 __mod_name__ = "Styletext"
 

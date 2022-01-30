@@ -20,15 +20,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import traceback
-import sys
+import html
 import os
 import re
-import html
 import subprocess
-from io import StringIO, BytesIO
-from elaina import pbot, OWNER_ID
+import sys
+import traceback
+from io import StringIO
+
 from pyrogram import filters
+
+from elaina import OWNER_ID, pbot
 
 
 async def aexec(code, client, message):
@@ -125,7 +127,7 @@ async def terminal(client, message):
             process = subprocess.Popen(
                 shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE
             )
-        except Exception as err:
+        except Exception:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             errors = traceback.format_exception(
                 etype=exc_type, value=exc_obj, tb=exc_tb

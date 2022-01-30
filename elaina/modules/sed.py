@@ -24,11 +24,12 @@ import sre_constants
 
 import regex
 import telegram
+from telegram import Update
+from telegram.ext import CallbackContext, Filters, run_async
+
 from elaina import LOGGER, dispatcher
 from elaina.modules.disable import DisableAbleMessageHandler
 from elaina.modules.helper_funcs.regex_helper import infinite_loop_check
-from telegram import Update
-from telegram.ext import CallbackContext, Filters, run_async
 
 DELIMITERS = ("/", ":", "|", "_")
 

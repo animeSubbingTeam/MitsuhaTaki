@@ -20,19 +20,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from elaina.modules.disable import (
-    DisableAbleCommandHandler,
-    DisableAbleMessageHandler,
-)
+from typing import List, Optional, Union
+
 from telegram.ext import (
-    CommandHandler,
-    MessageHandler,
     CallbackQueryHandler,
+    CommandHandler,
     InlineQueryHandler,
+    MessageHandler,
 )
 from telegram.ext.filters import MessageFilter
-from elaina import dispatcher as d, LOGGER
-from typing import Optional, Union, List
+
+from elaina import LOGGER
+from elaina import dispatcher as d
+from elaina.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
 
 
 class ElainaHandler:
@@ -48,7 +48,7 @@ class ElainaHandler:
         pass_chat_data: bool = False,
         run_async: bool = True,
         can_disable: bool = True,
-        group: Optional[Union[int,str]] = 40,
+        group: Optional[Union[int, str]] = 40,
     ):
         def _command(func):
             try:
@@ -115,7 +115,7 @@ class ElainaHandler:
         pattern: Optional[str] = None,
         can_disable: bool = True,
         run_async: bool = True,
-        group: Optional[Union[int,str]] = 60,
+        group: Optional[Union[int, str]] = 60,
         friendly=None,
     ):
         def _message(func):

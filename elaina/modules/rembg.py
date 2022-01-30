@@ -29,8 +29,8 @@ from telethon import types
 from telethon.tl import functions
 
 from elaina import REM_BG_API_KEY
-from elaina.events import register
 from elaina import telethn as tbot
+from elaina.events import register
 
 REM_BG_API_KEY = "REM_BG_API_KEY"
 TEMP_DOWNLOAD_DIRECTORY = "./"

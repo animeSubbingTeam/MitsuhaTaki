@@ -22,10 +22,6 @@
 
 from typing import Optional
 
-import elaina.modules.sql.rules_sql as sql
-from elaina import dispatcher
-from elaina.modules.helper_funcs.chat_status import user_admin
-from elaina.modules.helper_funcs.string_handling import markdown_parser
 from telegram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
@@ -37,6 +33,11 @@ from telegram import (
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, Filters
 from telegram.utils.helpers import escape_markdown
+
+import elaina.modules.sql.rules_sql as sql
+from elaina import dispatcher
+from elaina.modules.helper_funcs.chat_status import user_admin
+from elaina.modules.helper_funcs.string_handling import markdown_parser
 
 
 def get_rules(update: Update, context: CallbackContext):
@@ -154,6 +155,7 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
     return f"This chat has had it's rules set: `{bool(sql.get_rules(chat_id))}`"
+
 
 __help__ = """
 *Command For Member*

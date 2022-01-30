@@ -25,14 +25,16 @@ from asyncio import get_event_loop, sleep
 from pyrogram import filters
 from pyrogram.types import CallbackQuery, Message
 
-from elaina import pbot, arq
+from elaina import arq, pbot
 from elaina.services.keyboard import ikb
 
 proxies = []
 
+
 async def get_proxies():
     global proxies
     proxies = (await arq.proxy()).result
+
 
 loop = get_event_loop()
 loop.create_task(get_proxies())
@@ -43,8 +45,7 @@ def url_from_proxy(proxy: str) -> str:
     user, passwd = creds.split(":")
     host, port = proxy.split(":")
     return (
-        f"https://t.me/socks?server={host}&port="
-        + f"{port}&user={user}&pass={passwd}"
+        f"https://t.me/socks?server={host}&port=" + f"{port}&user={user}&pass={passwd}"
     )
 
 

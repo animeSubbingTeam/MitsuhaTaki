@@ -20,55 +20,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import html
 import aiohttp
-from typing import Optional, List
+from pyrogram import filters
 
 import elaina.modules.helper_funcs.git_api as api
-import elaina.modules.sql.github_sql as sql
-
-from pyrogram import filters
-from elaina import pbot, BOT_USERNAME
+from elaina import BOT_USERNAME, pbot
 from elaina.utils.errors import capture_err
-from elaina.modules.sql.clear_cmd_sql import get_clearcmd
-from elaina import dispatcher, OWNER_ID, EVENT_LOGS
-from elaina.modules.helper_funcs.filters import CustomFilters
-from elaina.modules.helper_funcs.chat_status import user_admin
-from elaina.modules.helper_funcs.misc import delete
-from elaina.modules.disable import DisableAbleCommandHandler
-
-from telegram.ext import (
-    CallbackContext,
-    CommandHandler,
-    Filters,
-    MessageHandler,
-    RegexHandler,
-    run_async,
-)
-
-from telegram import (
-    Message,
-    Chat,
-    Update,
-    Bot,
-    User,
-    ParseMode,
-    InlineKeyboardMarkup,
-    MAX_MESSAGE_LENGTH,
-)
 
 
 def getphh(index):
-    recentRelease = api.getReleaseData(api.getData("phhusson/treble_experimentations"), index)
+    recentRelease = api.getReleaseData(
+        api.getData("phhusson/treble_experimentations"), index
+    )
     if recentRelease is None:
         return "The specified release could not be found"
     author = api.getAuthor(recentRelease)
     authorUrl = api.getAuthorUrl(recentRelease)
-    name = api.getReleaseName(recentRelease)
+    api.getReleaseName(recentRelease)
     assets = api.getAssets(recentRelease)
     releaseName = api.getReleaseName(recentRelease)
     message = "<b>Author:</b> <a href='{}'>{}</a>\n".format(authorUrl, author)
-    message += "<b>Release Name:</b> <code>"+releaseName+"</code>\n\n"
+    message += "<b>Release Name:</b> <code>" + releaseName + "</code>\n\n"
     message += "<b>Assets:</b>\n"
     for asset in assets:
         fileName = api.getReleaseFileName(asset)
@@ -76,10 +48,10 @@ def getphh(index):
             continue
         fileURL = api.getReleaseFileURL(asset)
         assetFile = "• <a href='{}'>{}</a>".format(fileURL, fileName)
-        sizeB = ((api.getSize(asset))/1024)/1024
+        sizeB = ((api.getSize(asset)) / 1024) / 1024
         size = "{0:.2f}".format(sizeB)
         message += assetFile + "\n"
-        message += "    <code>Size: "  + size + " MB</code>\n"
+        message += "    <code>Size: " + size + " MB</code>\n"
     return message
 
 
@@ -122,7 +94,6 @@ async def github(_, message):
 **Following:** `{following}`"""
             except Exception as e:
                 print(str(e))
-                pass
     await message.reply_photo(photo=avatar_url, caption=caption)
 
 

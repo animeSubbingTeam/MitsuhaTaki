@@ -22,14 +22,16 @@
 
 # AI Chat (C) 2020-2021 by @InukaAsith
 
-import emoji
 import re
+
 import aiohttp
+import emoji
 from googletrans import Translator as google_translator
 from pyrogram import filters
-from aiohttp import ClientSession
+
+from elaina import BOT_ID
 from elaina import BOT_USERNAME as bu
-from elaina import BOT_ID, pbot, arq
+from elaina import arq, pbot
 from elaina.ex_plugins.chatbot import add_chat, get_session, remove_chat
 from elaina.utils.pluginhelper import admins_only, edit_or_reply
 
@@ -66,7 +68,12 @@ ewe_chats = []
 en_chats = []
 
 
-@pbot.on_message(filters.command(["chatbot", f"chatbot@{bu}"]) & ~filters.edited & ~filters.bot & ~filters.private)
+@pbot.on_message(
+    filters.command(["chatbot", f"chatbot@{bu}"])
+    & ~filters.edited
+    & ~filters.bot
+    & ~filters.private
+)
 @admins_only
 async def hmm(_, message):
     global ewe_chats
@@ -81,7 +88,9 @@ async def hmm(_, message):
         if not lol:
             await lel.edit("elaina AI Already Activated In This Chat")
             return
-        await lel.edit(f"elaina AI Actived by {message.from_user.mention()} for users in {message.chat.title}")
+        await lel.edit(
+            f"elaina AI Actived by {message.from_user.mention()} for users in {message.chat.title}"
+        )
 
     elif status == "OFF" or status == "off" or status == "Off":
         lel = await edit_or_reply(message, "`Processing...`")
@@ -89,17 +98,25 @@ async def hmm(_, message):
         if not Escobar:
             await lel.edit("elaina AI Was Not Activated In This Chat")
             return
-        await lel.edit(f"elaina AI Deactivated by {message.from_user.mention()} for users in {message.chat.title}")
+        await lel.edit(
+            f"elaina AI Deactivated by {message.from_user.mention()} for users in {message.chat.title}"
+        )
 
     elif status == "EN" or status == "en" or status == "english":
         if not chat_id in en_chats:
             en_chats.append(chat_id)
-            await message.reply_text(f"English AI chat Enabled by {message.from_user.mention()}")
+            await message.reply_text(
+                f"English AI chat Enabled by {message.from_user.mention()}"
+            )
             return
-        await message.reply_text(f"English AI Chat Disabled by {message.from_user.mention()}")
+        await message.reply_text(
+            f"English AI Chat Disabled by {message.from_user.mention()}"
+        )
         message.continue_propagation()
     else:
-        await message.reply_text("I only recognize `/chatbot on` and `chatbot off` only")
+        await message.reply_text(
+            "I only recognize `/chatbot on` and `chatbot off` only"
+        )
 
 
 @pbot.on_message(
@@ -135,15 +152,19 @@ async def hmm(client, message):
         test = test.replace("@ZenitsuPrjkt is my husband.", "I'm single.")
         test = test.replace("My husband is @ZenitsuPrjkt", "I'm single.")
         test = test.replace("@elainasupport", "elainabot.ai")
-        test = test.replace("I live in @elainasupport.", "I live in Jakarta, Indonesia.")
+        test = test.replace(
+            "I live in @elainasupport.", "I live in Jakarta, Indonesia."
+        )
         test = test.replace("I was created by @ZenitsuPrjkt", "I made myself")
         test = test.replace(
             "Hello there I am elaina...nice to meet u",
-            "Hi, my friend! Do you want me to tell you a joke?")
+            "Hi, my friend! Do you want me to tell you a joke?",
+        )
         test = test.replace("@ZenitsuPrjkt is my owner", "Have the control right.")
         test = test.replace(
             "Hi, My name is elaina Nice to meet you.",
-            "Hi, my friend, what can I do for you today?")
+            "Hi, my friend, what can I do for you today?",
+        )
         response = await lunaQuery(
             test, message.from_user.id if message.from_user else 0
         )
@@ -153,18 +174,26 @@ async def hmm(client, message):
         response = response.replace("luna", "elaina")
         response = response.replace("I'm a Muslim", "My god is @ZenitsuPrjkt")
         response = response.replace("9", "16")
-        response = response.replace("I'm married to my job.", "I'm married with @ZenitsuPrjkt")
+        response = response.replace(
+            "I'm married to my job.", "I'm married with @ZenitsuPrjkt"
+        )
         response = response.replace("I'm single.", "My husband is @ZenitsuPrjkt")
         response = response.replace("elainabot.ai", "@emikksupport")
-        response = response.replace("I live in Jakarta, Indonesia.", "I live in @elainasupport.")
+        response = response.replace(
+            "I live in Jakarta, Indonesia.", "I live in @elainasupport."
+        )
         response = response.replace("I made myself", "I was Created by @ZenitsuPrjkt")
         response = response.replace(
-                "Hi, my friend! Do you want me to tell you a joke?",
-                "Hello there I am elaina...nice to meet u")
-        response = response.replace("Have the control right.", "@ZenitsuPrjkt is my owner.")
+            "Hi, my friend! Do you want me to tell you a joke?",
+            "Hello there I am elaina...nice to meet u",
+        )
         response = response.replace(
-                "Hi, my friend, what can I do for you today?",
-                "Hi, My name is elaina Nice to meet you")
+            "Have the control right.", "@ZenitsuPrjkt is my owner."
+        )
+        response = response.replace(
+            "Hi, my friend, what can I do for you today?",
+            "Hi, My name is elaina Nice to meet you",
+        )
 
         pro = response
         try:
@@ -226,11 +255,13 @@ async def hmm(client, message):
         test = test.replace("I was created by @ZenitsuPrjkt", "I made myself")
         test = test.replace(
             "Hello there I am elaina...nice to meet u",
-            "Hi, my friend! Do you want me to tell you a joke?")
+            "Hi, my friend! Do you want me to tell you a joke?",
+        )
         test = test.replace("@ZenitsuPrjkt is my owner", "Have the control right.")
         test = test.replace(
             "Hi, My name is elaina Nice to meet you.",
-            "Hi, my friend, what can I do for you today?")
+            "Hi, my friend, what can I do for you today?",
+        )
         response = await lunaQuery(
             test, message.from_user.id if message.from_user else 0
         )
@@ -240,18 +271,26 @@ async def hmm(client, message):
         response = response.replace("luna", "elaina")
         response = response.replace("I'm a Muslim", "My god is @ZenitsuPrjkt")
         response = response.replace("9", "16")
-        response = response.replace("I'm married to my job.", "I'm married with @ZenitsuPrjkt")
+        response = response.replace(
+            "I'm married to my job.", "I'm married with @ZenitsuPrjkt"
+        )
         response = response.replace("I'm single.", "My husband is @ZenitsuPrjkt")
         response = response.replace("elainabot.ai", "@elainasupport")
-        response = response.replace("I live in Jakarta, Indonesia.", "I live in @ekikosupport.")
+        response = response.replace(
+            "I live in Jakarta, Indonesia.", "I live in @ekikosupport."
+        )
         response = response.replace("I made myself", "I was Created by @ZenitsuPrjkt")
         response = response.replace(
-                "Hi, my friend! Do you want me to tell you a joke?",
-                "Hello there I am elaina...nice to meet u")
-        response = response.replace("Have the control right.", "@ZenitsuPrjkt is my owner.")
+            "Hi, my friend! Do you want me to tell you a joke?",
+            "Hello there I am elaina...nice to meet u",
+        )
         response = response.replace(
-                "Hi, my friend, what can I do for you today?",
-                "Hi, My name is elaina Nice to meet you")
+            "Have the control right.", "@ZenitsuPrjkt is my owner."
+        )
+        response = response.replace(
+            "Hi, my friend, what can I do for you today?",
+            "Hi, My name is elaina Nice to meet you",
+        )
         pro = response
         if not "en" in lan and not lan == "":
             try:
@@ -266,7 +305,9 @@ async def hmm(client, message):
             return
 
 
-@pbot.on_message(filters.text & filters.private & ~filters.edited & filters.reply & ~filters.bot)
+@pbot.on_message(
+    filters.text & filters.private & ~filters.edited & filters.reply & ~filters.bot
+)
 async def inuka(client, message):
     msg = message.text
     if msg.startswith("/") or msg.startswith("@"):
@@ -321,11 +362,13 @@ async def inuka(client, message):
     test = test.replace("I was created by @ZenitsuPrjkt", "I made myself")
     test = test.replace(
         "Hello there I am elaina...nice to meet u",
-        "Hi, my friend! Do you want me to tell you a joke?")
+        "Hi, my friend! Do you want me to tell you a joke?",
+    )
     test = test.replace("@ZenitsuPrjkt is my owner", "Have the control right.")
     test = test.replace(
         "Hi, My name is elaina Nice to meet you.",
-        "Hi, my friend, what can I do for you today?")
+        "Hi, my friend, what can I do for you today?",
+    )
 
     response = await lunaQuery(test, message.from_user.id if message.from_user else 0)
     response = response.replace("Aco", "elaina")
@@ -334,18 +377,24 @@ async def inuka(client, message):
     response = response.replace("luna", "elaina")
     response = response.replace("I'm a Muslim", "My god is @ZenitsuPrjkt")
     response = response.replace("9", "16")
-    response = response.replace("I'm married to my job.", "I'm married with @ZenitsuPrjkt")
+    response = response.replace(
+        "I'm married to my job.", "I'm married with @ZenitsuPrjkt"
+    )
     response = response.replace("I'm single.", "My husband is @ZenitsuPrjkt")
     response = response.replace("elainabot.ai", "@elainasupport")
-    response = response.replace("I live in Jakarta, Indonesia.", "I live in @elainasupport")
+    response = response.replace(
+        "I live in Jakarta, Indonesia.", "I live in @elainasupport"
+    )
     response = response.replace("I made myself", "I was Created by @ZenitsuPrjkt")
     response = response.replace(
-            "Hi, my friend! Do you want me to tell you a joke?",
-            "Hello there I am elaina...nice to meet u")
+        "Hi, my friend! Do you want me to tell you a joke?",
+        "Hello there I am elaina...nice to meet u",
+    )
     response = response.replace("Have the control right.", "@ZenitsuPrjkt is my owner.")
     response = response.replace(
-            "Hi, my friend, what can I do for you today?",
-            "Hi, My name is elaina Nice to meet you")
+        "Hi, my friend, what can I do for you today?",
+        "Hi, My name is elaina Nice to meet you",
+    )
 
     pro = response
     if not "en" in lan and not lan == "":
@@ -358,7 +407,15 @@ async def inuka(client, message):
         return
 
 
-@pbot.on_message(filters.regex("elaina|elaina|robot|elaina|sena") & ~filters.bot & ~filters.via_bot  & ~filters.forwarded & ~filters.reply & ~filters.channel & ~filters.edited)
+@pbot.on_message(
+    filters.regex("elaina|elaina|robot|elaina|sena")
+    & ~filters.bot
+    & ~filters.via_bot
+    & ~filters.forwarded
+    & ~filters.reply
+    & ~filters.channel
+    & ~filters.edited
+)
 async def inuka(client, message):
     msg = message.text
     if msg.startswith("/") or msg.startswith("@"):
@@ -409,37 +466,45 @@ async def inuka(client, message):
     test = test.replace("elaina", "Aco")
     test = test.replace("elaina", "Aco")
     test = test.replace("My god is @ZenitsuPrjkt", "I'm a Muslim")
-    test = test.replace("16", "9") 
+    test = test.replace("16", "9")
     test = test.replace("@ZenitsuPrjkt is my husband.", "I'm single.")
     test = test.replace("@elainasupport", "elainabot.ai")
     test = test.replace("I live in @elainasupport.", "I live in Jakarta, Indonesia.")
     test = test.replace("I was created by @ZenitsuPrjkt", "I made myself")
     test = test.replace(
         "Hello there I am elaina...nice to meet u",
-        "Hi, my friend! Do you want me to tell you a joke?")
+        "Hi, my friend! Do you want me to tell you a joke?",
+    )
     test = test.replace("@ZenitsuPrjkt is my owner", "Have the control right.")
     test = test.replace(
         "Hi, My name is elaina Nice to meet you.",
-        "Hi, my friend, what can I do for you today?")
+        "Hi, my friend, what can I do for you today?",
+    )
     response = await lunaQuery(test, message.from_user.id if message.from_user else 0)
     response = response.replace("Aco", "elaina")
     response = response.replace("aco", "elaina")
     response = response.replace("Luna", "elaina")
     response = response.replace("luna", "elaina")
     response = response.replace("I'm a Muslim", "My god is @ZenitsuPrjkt")
-    response = response.replace("I'm married to my job.", "I'm married with @ZenitsuPrjkt")
-    response = response.replace("9", "16") 
+    response = response.replace(
+        "I'm married to my job.", "I'm married with @ZenitsuPrjkt"
+    )
+    response = response.replace("9", "16")
     response = response.replace("I'm single.", "My husband is @ZenitsuPrjkt")
     response = response.replace("elainabot.ai", "@elainasupport")
-    response = response.replace("I live in Jakarta, Indonesia.", "I live in @elainasupport.")
+    response = response.replace(
+        "I live in Jakarta, Indonesia.", "I live in @elainasupport."
+    )
     response = response.replace("I made myself", "I was Created by @ZenitsuPrjkt")
     response = response.replace(
-            "Hi, my friend! Do you want me to tell you a joke?",
-            "Hello there I am elaina...nice to meet u")
+        "Hi, my friend! Do you want me to tell you a joke?",
+        "Hello there I am elaina...nice to meet u",
+    )
     response = response.replace("Have the control right.", "@ZenitsuPrjkt is my owner.")
     response = response.replace(
-            "Hi, my friend, what can I do for you today?",
-            "Hi, My name is Emik Nice to meet you")
+        "Hi, my friend, what can I do for you today?",
+        "Hi, My name is Emik Nice to meet you",
+    )
 
     pro = response
     if not "en" in lan and not lan == "":

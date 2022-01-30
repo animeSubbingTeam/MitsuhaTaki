@@ -20,9 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import asyncio
-from pyrogram import filters
-from pyrogram.types import ChatPermissions, Message
 from elaina import pbot as app
 
 

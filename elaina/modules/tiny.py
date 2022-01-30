@@ -21,18 +21,20 @@
 # SOFTWARE.
 
 import os
+
 import cv2
 from PIL import Image
-from elaina.events import register
+
 from elaina import telethn as tbot
+from elaina.events import register
 
 
 @register(pattern="^/tiny ?(.*)")
 async def _(event):
     reply = await event.get_reply_message()
-    if not (reply and(reply.media)):
-           await event.reply("`Please reply to a sticker`")
-           return
+    if not (reply and (reply.media)):
+        await event.reply("`Please reply to a sticker`")
+        return
     kontol = await event.reply("`Processing tiny...`")
     ik = await tbot.download_media(reply)
     im1 = Image.open("elaina/resources/elaina.png")
@@ -42,7 +44,7 @@ async def _(event):
         json = open("json.json", "r")
         jsn = json.read()
         jsn = jsn.replace("512", "2000")
-        open = ("json.json", "w").write(jsn)
+        ("json.json", "w").write(jsn)
         os.system("lottie_convert.py json.json ken.tgs")
         file = "ken.tgs"
         os.remove("json.json")

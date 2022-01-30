@@ -20,13 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from elaina import telethn as tbot
-import os
 import re
+
 import bs4
 import requests
-from telethon import types
-from telethon.tl import functions
+
 from elaina.events import register
 
 langi = "en"

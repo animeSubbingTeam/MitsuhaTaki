@@ -22,18 +22,11 @@
 
 import threading
 
+from sqlalchemy import Column, ForeignKey, String, UnicodeText, UniqueConstraint, func
+from sqlalchemy.sql.sqltypes import BigInteger
+
 from elaina import dispatcher
 from elaina.modules.sql import BASE, SESSION
-from sqlalchemy import (
-    Column,
-    ForeignKey,
-    Integer,
-    String,
-    UnicodeText,
-    UniqueConstraint,
-    func,
-)
-from sqlalchemy.sql.sqltypes import BigInteger
 
 
 class Users(BASE):

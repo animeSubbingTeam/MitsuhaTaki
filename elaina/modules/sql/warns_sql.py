@@ -22,10 +22,11 @@
 
 import threading
 
-from elaina.modules.sql import BASE, SESSION
-from sqlalchemy import Boolean, Column, String, UnicodeText, distinct, func, Integer
-from sqlalchemy.sql.sqltypes import BigInteger
+from sqlalchemy import Boolean, Column, Integer, String, UnicodeText, distinct, func
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.sql.sqltypes import BigInteger
+
+from elaina.modules.sql import BASE, SESSION
 
 
 class Warns(BASE):

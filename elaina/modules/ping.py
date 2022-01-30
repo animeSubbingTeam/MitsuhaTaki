@@ -25,11 +25,11 @@ from typing import List
 
 import requests
 from telegram import ParseMode, Update
-from telegram.ext import CallbackContext, run_async
+from telegram.ext import CallbackContext
 
 from elaina import StartTime, dispatcher
-from elaina.modules.helper_funcs.chat_status import sudo_plus
 from elaina.modules.disable import DisableAbleCommandHandler
+from elaina.modules.helper_funcs.chat_status import sudo_plus
 
 sites_list = {
     "Telegram": "https://api.telegram.org",

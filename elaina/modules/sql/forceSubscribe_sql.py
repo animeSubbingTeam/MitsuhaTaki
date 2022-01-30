@@ -20,7 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from sqlalchemy import Column, String, Numeric, Boolean
+from sqlalchemy import Column, Numeric, String
+
 from elaina.modules.sql import BASE, SESSION
 
 

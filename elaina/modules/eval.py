@@ -28,10 +28,11 @@ import textwrap
 import traceback
 from contextlib import redirect_stdout
 
+from telegram import ParseMode, Update
+from telegram.ext import CallbackContext, CommandHandler
+
 from elaina import LOGGER, dispatcher
 from elaina.modules.helper_funcs.chat_status import dev_plus
-from telegram import ParseMode, Update
-from telegram.ext import CallbackContext, CommandHandler, run_async
 
 namespaces = {}
 
@@ -89,9 +90,7 @@ def do(func, bot, update):
     env = namespace_of(update.message.chat_id, update, bot)
 
     os.chdir(os.getcwd())
-    with open(
-        os.path.join(os.getcwd(), "output.txt"), "w"
-    ) as temp:
+    with open(os.path.join(os.getcwd(), "output.txt"), "w") as temp:
         temp.write(body)
 
     stdout = io.StringIO()
@@ -108,7 +107,7 @@ def do(func, bot, update):
     try:
         with redirect_stdout(stdout):
             func_return = func()
-    except Exception as e:
+    except Exception:
         value = stdout.getvalue()
         return f"{value}{traceback.format_exc()}"
     else:

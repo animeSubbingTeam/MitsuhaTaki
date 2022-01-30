@@ -22,7 +22,8 @@
 
 from pyrogram import filters
 
-from elaina import pbot as app, arq
+from elaina import arq
+from elaina import pbot as app
 from elaina.utils.errors import capture_err
 
 __mod_name__ = "Reddit"

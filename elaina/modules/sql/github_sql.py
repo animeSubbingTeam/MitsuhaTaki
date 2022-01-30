@@ -1,9 +1,8 @@
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, func, distinct, Integer
+from sqlalchemy import Column, Integer, String, UnicodeText
 
-from elaina.modules.helper_funcs.msg_types import Types
-from elaina.modules.sql import SESSION, BASE
+from elaina.modules.sql import BASE, SESSION
 
 
 class GitHub(BASE):

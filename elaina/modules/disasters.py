@@ -25,26 +25,14 @@ import json
 import os
 from typing import Optional
 
-from elaina import (
-    DEV_USERS,
-    OWNER_ID,
-    DRAGONS,
-    SUPPORT_CHAT,
-    DEMONS,
-    TIGERS,
-    WOLVES,
-    dispatcher,
-)
-from elaina.modules.helper_funcs.chat_status import (
-    dev_plus,
-    sudo_plus,
-    whitelist_plus,
-)
-from elaina.modules.helper_funcs.extraction import extract_user
-from elaina.modules.log_channel import gloggable
 from telegram import ParseMode, TelegramError, Update
 from telegram.ext import CallbackContext, CommandHandler
 from telegram.utils.helpers import mention_html
+
+from elaina import DEMONS, DEV_USERS, DRAGONS, OWNER_ID, TIGERS, WOLVES, dispatcher
+from elaina.modules.helper_funcs.chat_status import dev_plus, sudo_plus, whitelist_plus
+from elaina.modules.helper_funcs.extraction import extract_user
+from elaina.modules.log_channel import gloggable
 
 ELEVATED_USERS_FILE = os.path.join(os.getcwd(), "elaina/modules/elevated_users.json")
 
@@ -290,7 +278,8 @@ def addtiger(update: Update, context: CallbackContext) -> str:
         json.dump(data, outfile, indent=4)
 
     update.effective_message.reply_text(
-        rt + f"\nSuccessfully give a money to {user_member.first_name} for to be a Trader!",
+        rt
+        + f"\nSuccessfully give a money to {user_member.first_name} for to be a Trader!",
     )
 
     log_message = (
@@ -559,7 +548,9 @@ def devlist(update: Update, context: CallbackContext):
 
 
 SUDO_HANDLER = CommandHandler(("addsudo", "addemperor"), addsudo, run_async=True)
-SUPPORT_HANDLER = CommandHandler(("addsupport", "addcaptain"), addsupport, run_async=True)
+SUPPORT_HANDLER = CommandHandler(
+    ("addsupport", "addcaptain"), addsupport, run_async=True
+)
 TIGER_HANDLER = CommandHandler(("addsoldier"), addtiger, run_async=True)
 WHITELIST_HANDLER = CommandHandler(
     ("addwhitelist", "addtrader"), addwhitelist, run_async=True

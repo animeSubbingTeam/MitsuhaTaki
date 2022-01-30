@@ -22,8 +22,9 @@
 
 import threading
 
-from elaina.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, UnicodeText, distinct, func
+
+from elaina.modules.sql import BASE, SESSION
 
 
 class Rules(BASE):

@@ -28,7 +28,8 @@ from functools import wraps
 
 from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
 
-from elaina import ERROR_LOG, pbot as app
+from elaina import ERROR_LOG
+from elaina import pbot as app
 
 
 def split_limits(text):

@@ -23,7 +23,6 @@
 import traceback
 
 from elaina import pbot as app
-from elaina.utils.pluginhelper import fetch
 from elaina.utils.inlinefuncs import *
 
 __MODULE__ = "Inline"
@@ -37,14 +36,10 @@ async def inline_query_handler(client, query):
         answers = []
         if text.strip() == "":
             answerss = await inline_help_func(__HELP__)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=10
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=10)
         elif text.split()[0] == "alive":
             answerss = await alive_function(answers)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=10
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=10)
         elif text.split()[0] == "tr":
             if len(text.split()) < 3:
                 return await client.answer_inline_query(
@@ -112,10 +107,7 @@ async def inline_query_handler(client, query):
                 )
             tex = text.split(None, 1)[1].strip()
             answerss = await wall_func(answers, tex)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=2
-            )
-
+            await client.answer_inline_query(query.id, results=answerss, cache_time=2)
 
         elif text.split()[0] == "saavn":
             if len(text.split()) < 2:
@@ -179,9 +171,7 @@ async def inline_query_handler(client, query):
             user_id = query.from_user.id
             tex = text.split(None, 1)[1].strip()
             answerss = await tg_search_func(answers, tex, user_id)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=2
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=2)
 
         elif text.split()[0] == "music":
             if len(text.split()) < 2:
@@ -193,9 +183,7 @@ async def inline_query_handler(client, query):
                 )
             tex = text.split(None, 1)[1].strip()
             answerss = await music_inline_func(answers, tex)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=2
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=2)
 
         elif text.split()[0] == "wiki":
             if len(text.split()) < 2:
@@ -207,9 +195,7 @@ async def inline_query_handler(client, query):
                 )
             tex = text.split(None, 1)[1].strip()
             answerss = await wiki_func(answers, tex)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=2
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=2)
 
         elif text.split()[0] == "speedtest":
             answerss = await speedtest_init(query)
@@ -249,12 +235,9 @@ async def inline_query_handler(client, query):
             )
             await client.answer_inline_query(query.id, cache_time=0, results=results)
 
-
         elif text.split()[0] == "ping":
             answerss = await ping_func(answers)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=2
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=2)
 
         elif text.split()[0] == "ytmusic":
             if len(text.split()) < 2:
@@ -266,9 +249,7 @@ async def inline_query_handler(client, query):
                 )
             tex = query.query.split(None, 1)[1].strip()
             answerss = await yt_music_func(answers, tex)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=2
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=2)
         elif text.split()[0] == "webss":
             if len(text.split()) < 2:
                 return await client.answer_inline_query(
@@ -291,9 +272,7 @@ async def inline_query_handler(client, query):
                 )
             tex = text.split()[1].strip()
             answerss = await info_inline_func(answers, tex)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=2
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=2)
 
         elif text.split()[0] == "tmdb":
             if len(text.split()) < 2:
@@ -306,9 +285,7 @@ async def inline_query_handler(client, query):
                 )
             tex = text.split()[1].strip()
             answerss = await tmdb_func(answers, tex)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=2
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=2)
         elif text.split()[0] == "pokedex":
             if len(text.split()) < 2:
                 await client.answer_inline_query(
@@ -350,7 +327,6 @@ async def inline_query_handler(client, query):
             )
             await client.answer_inline_query(query.id, cache_time=0, results=results)
 
-
         elif text.split()[0] == "image":
             if len(text.split()) < 2:
                 return await client.answer_inline_query(
@@ -366,16 +342,13 @@ async def inline_query_handler(client, query):
                 query.id, results=answerss, cache_time=3600
             )
 
-
         elif text.split()[0] == "exec":
             await execute_code(query)
 
         elif text.strip() == "tasks":
             user_id = query.from_user.id
             answerss = await task_inline_func(user_id)
-            await client.answer_inline_query(
-                query.id, results=answerss, cache_time=1
-            )
+            await client.answer_inline_query(query.id, results=answerss, cache_time=1)
 
     except Exception as e:
         e = traceback.format_exc()

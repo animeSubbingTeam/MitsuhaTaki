@@ -31,6 +31,8 @@ from pyrogram.types import (
     Message,
 )
 
+from elaina import pbot
+
 # By @TroJanzHEX
 from elaina.ex_plugins.ImageEditor.edit_1 import (  # pylint:disable=import-error
     black_white,
@@ -78,7 +80,6 @@ from elaina.ex_plugins.ImageEditor.edit_5 import (  # pylint:disable=import-erro
     scanlineglitch_4,
     scanlineglitch_5,
 )
-from elaina import pbot
 
 lel = 00000000
 # pylint:disable=import-error

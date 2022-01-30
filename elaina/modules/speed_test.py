@@ -21,11 +21,12 @@
 # SOFTWARE.
 
 import speedtest
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
+from telegram.ext import CallbackContext, CallbackQueryHandler
+
 from elaina import DEV_USERS, dispatcher
 from elaina.modules.disable import DisableAbleCommandHandler
 from elaina.modules.helper_funcs.chat_status import dev_plus
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
-from telegram.ext import CallbackContext, CallbackQueryHandler
 
 
 def convert(speed):

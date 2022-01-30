@@ -23,25 +23,23 @@
 import asyncio
 import os
 import re
+
 import better_profanity
 import emoji
 import nude
 import requests
 from better_profanity import profanity
 from google_trans_new import google_translator
+from pymongo import MongoClient
 from telethon import events
 from telethon.tl.types import ChatBannedRights
-from elaina.confing import get_int_key, get_str_key
-from elaina.services.telethonbasics import is_admin
+
+from elaina import BOT_ID, MONGO_DB_URI
+from elaina import telethn as tbot
+from elaina.confing import get_str_key
 from elaina.events import register
-from pymongo import MongoClient
-from elaina.modules.sql.nsfw_watch_sql import (
-    add_nsfwatch,
-    get_all_nsfw_enabled_chat,
-    is_nsfwatch_indb,
-    rmnsfwatch,
-)
-from elaina import telethn as tbot, MONGO_DB_URI, BOT_ID
+from elaina.modules.sql.nsfw_watch_sql import add_nsfwatch, is_nsfwatch_indb, rmnsfwatch
+from elaina.services.telethonbasics import is_admin
 
 translator = google_translator()
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
@@ -51,6 +49,7 @@ MONGO_DB_URI = get_str_key("MONGO_DB_URI")
 client = MongoClient()
 client = MongoClient(MONGO_DB_URI)
 db = client["ElainaRobot"]
+
 
 async def is_nsfw(event):
     lmao = event
@@ -336,5 +335,6 @@ async def del_profanity(event):
                     dev = await event.respond(final)
                     await asyncio.sleep(10)
                     await dev.delete()
+
 
 __mod_name__ = "Shield"

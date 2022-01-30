@@ -21,7 +21,9 @@
 # SOFTWARE.
 
 import threading
-from sqlalchemy import Boolean, Column, BigInteger, UnicodeText
+
+from sqlalchemy import BigInteger, Boolean, Column, UnicodeText
+
 from elaina.modules.sql import BASE, SESSION
 
 

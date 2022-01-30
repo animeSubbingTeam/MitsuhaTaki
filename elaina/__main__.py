@@ -21,42 +21,14 @@
 # SOFTWARE.
 
 import html
-import os
-import json
 import importlib
-import time
+import json
 import re
-import sys
+import time
 import traceback
-import elaina.modules.sql.users_sql as sql
 from sys import argv
 from typing import Optional
-from telegram import __version__ as peler
-from platform import python_version as memek
-from elaina import (
-    ALLOW_EXCL,
-    CERT_PATH,
-    DONATION_LINK,
-    LOGGER,
-    OWNER_ID,
-    PORT,
-    SUPPORT_CHAT,
-    TOKEN,
-    URL,
-    WEBHOOK,
-    SUPPORT_CHAT,
-    dispatcher,
-    StartTime,
-    telethn,
-    pbot,
-    updater,
-)
 
-# needed to dynamically load modules
-# NOTE: Module order is not guaranteed, specify that in the config file!
-from elaina.modules import ALL_MODULES
-from elaina.modules.helper_funcs.chat_status import is_user_admin
-from elaina.modules.helper_funcs.misc import paginate_modules
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import (
     BadRequest,
@@ -73,8 +45,32 @@ from telegram.ext import (
     Filters,
     MessageHandler,
 )
-from telegram.ext.dispatcher import DispatcherHandlerStop, run_async
+from telegram.ext.dispatcher import DispatcherHandlerStop
 from telegram.utils.helpers import escape_markdown
+
+import elaina.modules.sql.users_sql as sql
+from elaina import (
+    CERT_PATH,
+    DONATION_LINK,
+    LOGGER,
+    OWNER_ID,
+    PORT,
+    SUPPORT_CHAT,
+    TOKEN,
+    URL,
+    WEBHOOK,
+    StartTime,
+    dispatcher,
+    pbot,
+    telethn,
+    updater,
+)
+
+# needed to dynamically load modules
+# NOTE: Module order is not guaranteed, specify that in the config file!
+from elaina.modules import ALL_MODULES
+from elaina.modules.helper_funcs.chat_status import is_user_admin
+from elaina.modules.helper_funcs.misc import paginate_modules
 
 
 def get_readable_time(seconds: int) -> str:
@@ -115,13 +111,12 @@ Im Powerfull Management Bot And I Will Help In Managing Your Group.
 buttons = [
     [
         InlineKeyboardButton(
-            text="🎉 Add Me To Your Group", url="t.me/ElainaPrjktRobot?startgroup=new"),
+            text="🎉 Add Me To Your Group", url="t.me/ElainaPrjktRobot?startgroup=new"
+        ),
     ],
     [
         InlineKeyboardButton(text="🤖 About", callback_data="elaina_"),
-        InlineKeyboardButton(
-            text="🛡 ️Federation", url="https://t.me/WolfOsFederation"
-        ),
+        InlineKeyboardButton(text="🛡 ️Federation", url="https://t.me/WolfOsFederation"),
     ],
     [
         InlineKeyboardButton(text="❔ Help", callback_data="help_back"),
@@ -243,7 +238,8 @@ def start(update: Update, context: CallbackContext):
                     escape_markdown(first_name),
                     escape_markdown(uptime),
                     sql.num_users(),
-                    sql.num_chats()),                        
+                    sql.num_chats(),
+                ),
                 reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
                 timeout=60,
@@ -252,8 +248,8 @@ def start(update: Update, context: CallbackContext):
     else:
         update.effective_message.reply_text(
             f"👋 Hi, I'm {dispatcher.bot.first_name}. Nice to meet You.",
-            parse_mode=ParseMode.HTML
-       )
+            parse_mode=ParseMode.HTML,
+        )
 
 
 def error_handler(update, context):
@@ -395,17 +391,26 @@ def elaina_about_callback(update, context):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
                 [
-                 [
-                    InlineKeyboardButton(text="Admins", callback_data="elaina_admin"),
-                    InlineKeyboardButton(text="Notes", callback_data="elaina_notes"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Credits", callback_data="elaina_credit"),
-                    InlineKeyboardButton(text="Source Code", url="https://github.com/ZenitsuPrjkt/ElainaRobot"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Back", callback_data="elaina_back"),
-                 ]
+                    [
+                        InlineKeyboardButton(
+                            text="Admins", callback_data="elaina_admin"
+                        ),
+                        InlineKeyboardButton(
+                            text="Notes", callback_data="elaina_notes"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Credits", callback_data="elaina_credit"
+                        ),
+                        InlineKeyboardButton(
+                            text="Source Code",
+                            url="https://github.com/ZenitsuPrjkt/ElainaRobot",
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(text="Back", callback_data="elaina_back"),
+                    ],
                 ]
             ),
         )
@@ -413,15 +418,16 @@ def elaina_about_callback(update, context):
         first_name = update.effective_user.first_name
         uptime = get_readable_time((time.time() - StartTime))
         query.message.edit_text(
-                PM_START_TEXT.format(
-                    escape_markdown(first_name),
-                    escape_markdown(uptime),
-                    sql.num_users(),
-                    sql.num_chats()),
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-                disable_web_page_preview=False,
+            PM_START_TEXT.format(
+                escape_markdown(first_name),
+                escape_markdown(uptime),
+                sql.num_users(),
+                sql.num_chats(),
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=ParseMode.MARKDOWN,
+            timeout=60,
+            disable_web_page_preview=False,
         )
 
     elif query.data == "elaina_admin":
@@ -460,35 +466,58 @@ def elaina_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             reply_markup=InlineKeyboardMarkup(
                 [
-                 [
-                    InlineKeyboardButton(text="Zenitsu Prjkt", url="https://github.com/ZenitsuPrjkt"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="sena-ex", url="https://github.com/kennedy-ex"),
-                    InlineKeyboardButton(text="TheHamkerCat", url="https://github.com/TheHamkerCat"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Feri", url="https://github.com/FeriEXP"),
-                    InlineKeyboardButton(text="riz-ex", url="https://github.com/riz-ex"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Anime Kaizoku", url="https://github.com/animekaizoku"),
-                    InlineKeyboardButton(text="TheGhost Hunter", url="https://github.com/HuntingBots"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Inuka Asith", url="https://github.com/inukaasith"),
-                    InlineKeyboardButton(text="Noob-Kittu", url="https://github.com/noob-kittu"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Queen Arzoo", url="https://github.com/QueenArzoo"),
-                    InlineKeyboardButton(text="Paul Larsen", url="https://github.com/PaulSonOfLars"),
-                 ],
-                 [
-                    InlineKeyboardButton(text="Back", callback_data="elaina_"),
-                 ]
+                    [
+                        InlineKeyboardButton(
+                            text="Zenitsu Prjkt", url="https://github.com/ZenitsuPrjkt"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="sena-ex", url="https://github.com/kennedy-ex"
+                        ),
+                        InlineKeyboardButton(
+                            text="TheHamkerCat", url="https://github.com/TheHamkerCat"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Feri", url="https://github.com/FeriEXP"
+                        ),
+                        InlineKeyboardButton(
+                            text="riz-ex", url="https://github.com/riz-ex"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Anime Kaizoku", url="https://github.com/animekaizoku"
+                        ),
+                        InlineKeyboardButton(
+                            text="TheGhost Hunter", url="https://github.com/HuntingBots"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Inuka Asith", url="https://github.com/inukaasith"
+                        ),
+                        InlineKeyboardButton(
+                            text="Noob-Kittu", url="https://github.com/noob-kittu"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(
+                            text="Queen Arzoo", url="https://github.com/QueenArzoo"
+                        ),
+                        InlineKeyboardButton(
+                            text="Paul Larsen", url="https://github.com/PaulSonOfLars"
+                        ),
+                    ],
+                    [
+                        InlineKeyboardButton(text="Back", callback_data="elaina_"),
+                    ],
                 ]
             ),
         )
+
 
 def Source_about_callback(update, context):
     query = update.callback_query
@@ -508,27 +537,25 @@ def Source_about_callback(update, context):
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
-                [
-                 [
-                    InlineKeyboardButton(text="Back", callback_data="elaina_")
-                 ]
-                ]
+                [[InlineKeyboardButton(text="Back", callback_data="elaina_")]]
             ),
         )
-        
+
     elif query.data == "source_back":
         first_name = update.effective_user.first_name
         query.message.edit_text(
-                PM_START_TEXT.format(
-                    escape_markdown(first_name),
-                    escape_markdown(uptime),
-                    sql.num_users(),
-                    sql.num_chats()),
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-                disable_web_page_preview=False,
+            PM_START_TEXT.format(
+                escape_markdown(first_name),
+                escape_markdown(uptime),
+                sql.num_users(),
+                sql.num_chats(),
+            ),
+            reply_markup=InlineKeyboardMarkup(buttons),
+            parse_mode=ParseMode.MARKDOWN,
+            timeout=60,
+            disable_web_page_preview=False,
         )
+
 
 def get_help(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
@@ -801,9 +828,7 @@ def main():
     if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
         try:
             dispatcher.bot.sendMessage(
-                f"@{SUPPORT_CHAT}", 
-                "👋 Hi, i'm alive.",
-                parse_mode=ParseMode.MARKDOWN
+                f"@{SUPPORT_CHAT}", "👋 Hi, i'm alive.", parse_mode=ParseMode.MARKDOWN
             )
         except Unauthorized:
             LOGGER.warning(

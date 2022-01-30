@@ -20,26 +20,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
-import re
-from platform import python_version as kontol
-from telethon import events, Button
+from pyrogram import __version__ as pyrover
 from telegram import __version__ as telever
 from telethon import __version__ as tlhver
-from pyrogram import __version__ as pyrover
-from elaina.events import register
-from elaina import telethn as tbot
 
+from elaina import telethn as tbot
+from elaina.events import register
 
 PHOTO = "https://telegra.ph/file/7482398e772bd21a1f2bb.jpg"
 
+
 @register(pattern=("/alive"))
 async def awake(event):
-  TEXT = f"**Hi [{event.sender.first_name}](tg://user?id={event.sender.id}), I'm Elaina Robot.** \n\n"
-  TEXT += "💠 **I'm Working Properly** \n\n"
-  TEXT += "💠 **My Master : [Zenitsu Prjkt](https://t.me/ZenitsuPrjkt)** \n\n"
-  TEXT += f"💠 **Library Version :** `{telever}` \n\n"
-  TEXT += f"💠 **Telethon Version :** `{tlhver}` \n\n"
-  TEXT += f"💠 **Pyrogram Version :** `{pyrover}` \n\n"
-  TEXT += "**Thanks For Adding Me Here ❤️**"
-  await tbot.send_file(event.chat_id, PHOTO, caption=TEXT)
+    TEXT = f"**Hi [{event.sender.first_name}](tg://user?id={event.sender.id}), I'm Elaina Robot.** \n\n"
+    TEXT += "💠 **I'm Working Properly** \n\n"
+    TEXT += "💠 **My Master : [Zenitsu Prjkt](https://t.me/ZenitsuPrjkt)** \n\n"
+    TEXT += f"💠 **Library Version :** `{telever}` \n\n"
+    TEXT += f"💠 **Telethon Version :** `{tlhver}` \n\n"
+    TEXT += f"💠 **Pyrogram Version :** `{pyrover}` \n\n"
+    TEXT += "**Thanks For Adding Me Here ❤️**"
+    await tbot.send_file(event.chat_id, PHOTO, caption=TEXT)

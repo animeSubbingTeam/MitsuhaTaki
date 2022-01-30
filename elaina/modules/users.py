@@ -25,12 +25,7 @@ from time import sleep
 
 from telegram import TelegramError, Update
 from telegram.error import BadRequest, Unauthorized
-from telegram.ext import (
-    CallbackContext,
-    CommandHandler,
-    Filters,
-    MessageHandler,
-)
+from telegram.ext import CallbackContext, CommandHandler, Filters, MessageHandler
 
 import elaina.modules.sql.users_sql as sql
 from elaina import DEV_USERS, LOGGER, OWNER_ID, dispatcher
@@ -144,7 +139,7 @@ def chats(update: Update, context: CallbackContext):
     for chat in all_chats:
         try:
             curr_chat = context.bot.getChat(chat.chat_id)
-            bot_member = curr_chat.get_member(context.bot.id)
+            curr_chat.get_member(context.bot.id)
             chat_members = curr_chat.get_member_count(context.bot.id)
             chatfile += "{}. {} | {} | {}\n".format(
                 P,

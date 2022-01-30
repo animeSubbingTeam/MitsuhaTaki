@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from telegram import User, Chat
+from telegram import Chat, User
 
 
 def user_can_promote(chat: Chat, user: User, bot_id: int) -> bool:

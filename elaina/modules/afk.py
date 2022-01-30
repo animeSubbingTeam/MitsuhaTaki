@@ -20,26 +20,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import random, html
+import html
+import random
 
-from elaina import dispatcher
-from elaina.modules.disable import (
-    DisableAbleCommandHandler,
-    DisableAbleMessageHandler,
-)
-from elaina.modules.sql import afk_sql as sql
-from elaina.modules.users import get_user_id
 from telegram import MessageEntity, Update
 from telegram.error import BadRequest
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
-from telegram.ext import (
-    CallbackContext,
-    CallbackQueryHandler,
-    CommandHandler,
-    Filters,
-    MessageHandler,
-    run_async,
-)
+from telegram.ext import CallbackContext, Filters, MessageHandler
+
+from elaina import dispatcher
+from elaina.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
+from elaina.modules.sql import afk_sql as sql
+from elaina.modules.users import get_user_id
 
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8

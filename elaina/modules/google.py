@@ -20,32 +20,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from bs4 import BeautifulSoup
-import urllib
 import glob
 import io
 import os
 import re
-import aiohttp
+import urllib
 import urllib.request
-from urllib.parse import urlencode
+
+import bs4
 import requests
+from bing_image_downloader import downloader
 from bs4 import BeautifulSoup
 from PIL import Image
 from search_engine_parser import GoogleSearch
 
-import bs4
-import html2text
-from bing_image_downloader import downloader
-from telethon import *
-from telethon.tl import functions
-from telethon.tl import types
-from telethon.tl.types import *
-
-from elaina import *
-
-from elaina.events import register
 from elaina import telethn as tbot
+from elaina.events import register
 
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Linux; Android 9; SM-G960F Build/PPR1.180610.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.157 Mobile Safari/537.36"
@@ -239,7 +229,7 @@ async def apk(e):
         page = requests.get(
             "https://play.google.com/store/search?q=" + final_name + "&c=apps"
         )
-        lnk = str(page.status_code)
+        str(page.status_code)
         soup = bs4.BeautifulSoup(page.content, "lxml", from_encoding="utf-8")
         results = soup.findAll("div", "ZmHEEd")
         app_name = (
@@ -314,4 +304,3 @@ Elaina <query>*:* Elaina answers the query.
 
   💡Ex: `Elaina where is Japan?`
 """
-

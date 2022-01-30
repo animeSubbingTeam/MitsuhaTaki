@@ -22,7 +22,9 @@
 
 from datetime import datetime
 from functools import wraps
+
 from telegram.ext import CallbackContext
+
 from elaina.modules.helper_funcs.misc import is_module_loaded
 
 FILENAME = __name__.rsplit(".", 1)[-1]
@@ -30,7 +32,7 @@ FILENAME = __name__.rsplit(".", 1)[-1]
 if is_module_loaded(FILENAME):
     from telegram import ParseMode, Update
     from telegram.error import BadRequest, Unauthorized
-    from telegram.ext import CommandHandler, JobQueue, run_async
+    from telegram.ext import CommandHandler, JobQueue
     from telegram.utils.helpers import escape_markdown
 
     from elaina import EVENT_LOGS, LOGGER, dispatcher

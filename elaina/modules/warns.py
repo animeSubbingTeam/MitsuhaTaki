@@ -25,27 +25,6 @@ import re
 from typing import Optional
 
 import telegram
-from elaina import TIGERS, WOLVES, dispatcher
-from elaina.modules.disable import DisableAbleCommandHandler
-from elaina.modules.helper_funcs.chat_status import (
-    bot_admin,
-    can_restrict,
-    is_user_admin,
-    user_admin,
-    user_can_ban,
-    user_admin_no_reply,
-    can_delete,
-)
-from elaina.modules.helper_funcs.extraction import (
-    extract_text,
-    extract_user,
-    extract_user_and_text,
-)
-from elaina.modules.helper_funcs.filters import CustomFilters
-from elaina.modules.helper_funcs.misc import split_message
-from elaina.modules.helper_funcs.string_handling import split_quotes
-from elaina.modules.log_channel import loggable
-from elaina.modules.sql import warns_sql as sql
 from telegram import (
     CallbackQuery,
     Chat,
@@ -64,9 +43,28 @@ from telegram.ext import (
     DispatcherHandlerStop,
     Filters,
     MessageHandler,
-    run_async,
 )
 from telegram.utils.helpers import mention_html
+
+from elaina import TIGERS, WOLVES, dispatcher
+from elaina.modules.disable import DisableAbleCommandHandler
+from elaina.modules.helper_funcs.chat_status import (
+    bot_admin,
+    can_restrict,
+    is_user_admin,
+    user_admin,
+    user_admin_no_reply,
+)
+from elaina.modules.helper_funcs.extraction import (
+    extract_text,
+    extract_user,
+    extract_user_and_text,
+)
+from elaina.modules.helper_funcs.filters import CustomFilters
+from elaina.modules.helper_funcs.misc import split_message
+from elaina.modules.helper_funcs.string_handling import split_quotes
+from elaina.modules.log_channel import loggable
+from elaina.modules.sql import warns_sql as sql
 from elaina.modules.sql.approve_sql import is_approved
 
 WARN_HANDLER_GROUP = 9
@@ -74,11 +72,9 @@ CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
 
 # Not async
-def warn(user: User,
-         chat: Chat,
-         reason: str,
-         message: Message,
-         warner: User = None) -> str:
+def warn(
+    user: User, chat: Chat, reason: str, message: Message, warner: User = None
+) -> str:
     if is_user_admin(chat, user.id):
         # message.reply_text("Damn admins, They are too far to be One Punched!")
         return
@@ -112,60 +108,64 @@ def warn(user: User,
         sql.reset_warns(user.id, chat.id)
         if soft_warn:  # punch
             chat.unban_member(user.id)
-            reply = (
-                f"{mention_html(user.id, user.first_name)} [<code>{user.id}</code>] Kicked")
+            reply = f"{mention_html(user.id, user.first_name)} [<code>{user.id}</code>] Kicked"
 
         else:  # ban
             chat.kick_member(user.id)
-            reply = (
-                f"{mention_html(user.id, user.first_name)} [<code>{user.id}</code>] Banned")
+            reply = f"{mention_html(user.id, user.first_name)} [<code>{user.id}</code>] Banned"
 
         for warn_reason in reasons:
             reply += f"\n - {html.escape(warn_reason)}"
 
         # message.bot.send_sticker(chat.id, BAN_STICKER)  # Saitama's sticker
         keyboard = None
-        log_reason = (f"<b>{html.escape(chat.title)}:</b>\n"
-                      f"#WARN_BAN\n"
-                      f"<b>Admin:</b> {warner_tag}\n"
-                      f"<b>User:</b> {mention_html(user.id, user.first_name)}\n"
-                      f"<b>Reason:</b> {reason}\n"
-                      f"<b>Counts:</b> <code>{num_warns}/{limit}</code>")
+        log_reason = (
+            f"<b>{html.escape(chat.title)}:</b>\n"
+            f"#WARN_BAN\n"
+            f"<b>Admin:</b> {warner_tag}\n"
+            f"<b>User:</b> {mention_html(user.id, user.first_name)}\n"
+            f"<b>Reason:</b> {reason}\n"
+            f"<b>Counts:</b> <code>{num_warns}/{limit}</code>"
+        )
 
     else:
-        keyboard = InlineKeyboardMarkup([[
-            InlineKeyboardButton(
-                "Remove", callback_data="rm_warn({})".format(user.id))
-        ]])
+        keyboard = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        "Remove", callback_data="rm_warn({})".format(user.id)
+                    )
+                ]
+            ]
+        )
 
         reply = (
             f"{mention_html(user.id, user.first_name)} [<code>{user.id}</code>]"
-            f" Warned ({num_warns} of {limit}).")
+            f" Warned ({num_warns} of {limit})."
+        )
         if reason:
             reply += f"\nReason: {html.escape(reason)}"
 
-        log_reason = (f"<b>{html.escape(chat.title)}:</b>\n"
-                      f"#WARN\n"
-                      f"<b>Admin:</b> {warner_tag}\n"
-                      f"<b>User:</b> {mention_html(user.id, user.first_name)}\n"
-                      f"<b>Reason:</b> {reason}\n"
-                      f"<b>Counts:</b> <code>{num_warns}/{limit}</code>")
+        log_reason = (
+            f"<b>{html.escape(chat.title)}:</b>\n"
+            f"#WARN\n"
+            f"<b>Admin:</b> {warner_tag}\n"
+            f"<b>User:</b> {mention_html(user.id, user.first_name)}\n"
+            f"<b>Reason:</b> {reason}\n"
+            f"<b>Counts:</b> <code>{num_warns}/{limit}</code>"
+        )
 
     try:
-        message.reply_text(
-            reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
+        message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
             message.reply_text(
-                reply,
-                reply_markup=keyboard,
-                parse_mode=ParseMode.HTML,
-                quote=False)
+                reply, reply_markup=keyboard, parse_mode=ParseMode.HTML, quote=False
+            )
         else:
             raise
     return log_reason
-
 
 
 @user_admin_no_reply
@@ -511,6 +511,7 @@ def __chat_settings__(chat_id, user_id):
         f"It takes `{limit}` warns before the user gets *{'kicked' if soft_warn else 'banned'}*."
     )
 
+
 __help__ = """
 *Admin Only*
 × /warns <userhandle>: get a user's number, and reason, of warns.
@@ -526,23 +527,43 @@ __help__ = """
 
 __mod_name__ = "Warning"
 
-WARN_HANDLER = CommandHandler(["warn", "dwarn"], warn_user, filters=Filters.chat_type.groups, run_async=True)
-RESET_WARN_HANDLER = CommandHandler(
-    ["resetwarn", "resetwarns"], reset_warns, filters=Filters.chat_type.groups, run_async=True
+WARN_HANDLER = CommandHandler(
+    ["warn", "dwarn"], warn_user, filters=Filters.chat_type.groups, run_async=True
 )
-CALLBACK_QUERY_HANDLER = CallbackQueryHandler(button, pattern=r"rm_warn", run_async=True)
-MYWARNS_HANDLER = DisableAbleCommandHandler("warns", warns, filters=Filters.chat_type.groups, run_async=True)
-ADD_WARN_HANDLER = CommandHandler("addwarn", add_warn_filter, filters=Filters.chat_type.groups, run_async=True)
+RESET_WARN_HANDLER = CommandHandler(
+    ["resetwarn", "resetwarns"],
+    reset_warns,
+    filters=Filters.chat_type.groups,
+    run_async=True,
+)
+CALLBACK_QUERY_HANDLER = CallbackQueryHandler(
+    button, pattern=r"rm_warn", run_async=True
+)
+MYWARNS_HANDLER = DisableAbleCommandHandler(
+    "warns", warns, filters=Filters.chat_type.groups, run_async=True
+)
+ADD_WARN_HANDLER = CommandHandler(
+    "addwarn", add_warn_filter, filters=Filters.chat_type.groups, run_async=True
+)
 RM_WARN_HANDLER = CommandHandler(
-    ["nowarn", "stopwarn"], remove_warn_filter, filters=Filters.chat_type.groups, run_async=True
+    ["nowarn", "stopwarn"],
+    remove_warn_filter,
+    filters=Filters.chat_type.groups,
+    run_async=True,
 )
 LIST_WARN_HANDLER = DisableAbleCommandHandler(
-    ["warnlist", "warnfilters"], list_warn_filters, filters=Filters.chat_type.groups, admin_ok=True, run_async=True
+    ["warnlist", "warnfilters"],
+    list_warn_filters,
+    filters=Filters.chat_type.groups,
+    admin_ok=True,
+    run_async=True,
 )
 WARN_FILTER_HANDLER = MessageHandler(
     CustomFilters.has_text & Filters.chat_type.groups, reply_filter, run_async=True
 )
-WARN_LIMIT_HANDLER = CommandHandler("warnlimit", set_warn_limit, filters=Filters.chat_type.groups, run_async=True)
+WARN_LIMIT_HANDLER = CommandHandler(
+    "warnlimit", set_warn_limit, filters=Filters.chat_type.groups, run_async=True
+)
 WARN_STRENGTH_HANDLER = CommandHandler(
     "strongwarn", set_warn_strength, filters=Filters.chat_type.groups, run_async=True
 )

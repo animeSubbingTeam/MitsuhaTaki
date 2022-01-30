@@ -20,30 +20,36 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import elaina.modules.sql.locks_sql as sql
-import html
 import ast
+import html
 
-from telegram import Message, Chat, ParseMode, MessageEntity
-from telegram import TelegramError, ChatPermissions
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters
-from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import mention_html
 from alphabet_detector import AlphabetDetector
-from elaina import dispatcher, DRAGONS, LOGGER
+from telegram import (
+    Chat,
+    ChatPermissions,
+    Message,
+    MessageEntity,
+    ParseMode,
+    TelegramError,
+)
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, Filters, MessageHandler
+from telegram.utils.helpers import mention_html
+
+import elaina.modules.sql.locks_sql as sql
+from elaina import LOGGER, dispatcher
+from elaina.modules.connection import connected
 from elaina.modules.disable import DisableAbleCommandHandler
+from elaina.modules.helper_funcs.alternate import send_message, typing_action
 from elaina.modules.helper_funcs.chat_status import (
     can_delete,
-    is_user_admin,
-    user_not_admin,
     is_bot_admin,
+    is_user_admin,
     user_admin,
+    user_not_admin,
 )
-from elaina.modules.sql.approve_sql import is_approved
 from elaina.modules.log_channel import loggable
-from elaina.modules.connection import connected
-from elaina.modules.helper_funcs.alternate import send_message, typing_action
+from elaina.modules.sql.approve_sql import is_approved
 
 ad = AlphabetDetector()
 

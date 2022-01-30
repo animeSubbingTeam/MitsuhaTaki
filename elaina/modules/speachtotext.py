@@ -21,20 +21,16 @@
 # SOFTWARE.
 
 import os
-import urllib.request
 from datetime import datetime
-from typing import List
-from typing import Optional
+
 import requests
 from telethon import *
-from telethon import events
-from telethon.tl import functions
-from telethon.tl import types
+from telethon.tl import functions, types
 from telethon.tl.types import *
 
 from elaina import *
-from elaina.events import register
 from elaina import telethn as tbot
+from elaina.events import register
 
 
 async def is_register_admin(chat, user):
@@ -107,5 +103,6 @@ async def _(event):
             os.remove(required_file_name)
     else:
         await event.reply("Reply to a voice message, to get the text out of it.")
+
 
 __mod_name__ = "TTS/STT"

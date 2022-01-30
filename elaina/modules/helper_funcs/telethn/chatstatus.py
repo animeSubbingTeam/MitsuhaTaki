@@ -20,9 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from elaina.modules.helper_funcs.telethn import IMMUNE_USERS, telethn
-from elaina import DRAGONS
 from telethon.tl.types import ChannelParticipantsAdmins
+
+from elaina import DRAGONS
+from elaina.modules.helper_funcs.telethn import IMMUNE_USERS, telethn
 
 
 async def user_is_ban_protected(user_id: int, message):

@@ -22,11 +22,13 @@
 
 import ast
 import threading
+
+from sqlalchemy import Boolean, Column, Integer, String, UnicodeText
+from sqlalchemy.sql.sqltypes import BigInteger
+from telegram.error import BadRequest, Unauthorized
+
 from elaina import dispatcher
 from elaina.modules.sql import BASE, SESSION
-from sqlalchemy import Boolean, Column, String, UnicodeText, Integer
-from telegram.error import BadRequest, Unauthorized
-from sqlalchemy.sql.sqltypes import BigInteger
 
 
 class Federations(BASE):
@@ -660,7 +662,6 @@ def get_all_fban_users_target(fed_id, user_id):
 
 
 def get_all_fban_users_global():
-    list_fbanned = FEDERATION_BANNED_USERID
     total = []
     for x in list(FEDERATION_BANNED_USERID):
         for y in FEDERATION_BANNED_USERID[x]:
@@ -669,7 +670,6 @@ def get_all_fban_users_global():
 
 
 def get_all_feds_users_global():
-    list_fed = FEDERATION_BYFEDID
     total = []
     for x in list(FEDERATION_BYFEDID):
         total.append(FEDERATION_BYFEDID[x])

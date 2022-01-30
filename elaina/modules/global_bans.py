@@ -27,40 +27,32 @@ from io import BytesIO
 
 from telegram import ParseMode, Update
 from telegram.error import BadRequest, TelegramError, Unauthorized
-from telegram.ext import (
-    CallbackContext,
-    CommandHandler,
-    Filters,
-    MessageHandler,
-)
+from telegram.ext import CallbackContext, CommandHandler, Filters, MessageHandler
 from telegram.utils.helpers import mention_html
 
 import elaina.modules.sql.global_bans_sql as sql
-from elaina.modules.sql.users_sql import get_user_com_chats
 from elaina import (
+    DEMONS,
     DEV_USERS,
+    DRAGONS,
     EVENT_LOGS,
     OWNER_ID,
-    STRICT_GBAN,
-    DRAGONS,
-    SUPPORT_CHAT,
     SPAMWATCH_SUPPORT_CHAT,
-    DEMONS,
+    STRICT_GBAN,
+    SUPPORT_CHAT,
     TIGERS,
     WOLVES,
-    sw,
     dispatcher,
+    sw,
 )
 from elaina.modules.helper_funcs.chat_status import (
     is_user_admin,
     support_plus,
     user_admin,
 )
-from elaina.modules.helper_funcs.extraction import (
-    extract_user,
-    extract_user_and_text,
-)
+from elaina.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from elaina.modules.helper_funcs.misc import send_to_list
+from elaina.modules.sql.users_sql import get_user_com_chats
 
 GBAN_ENFORCE_GROUP = 6
 
@@ -214,7 +206,7 @@ def gban(update: Update, context: CallbackContext):
     if EVENT_LOGS:
         try:
             log = bot.send_message(EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
-        except BadRequest as excp:
+        except BadRequest:
             log = bot.send_message(
                 EVENT_LOGS,
                 log_message
@@ -345,7 +337,7 @@ def ungban(update: Update, context: CallbackContext):
     if EVENT_LOGS:
         try:
             log = bot.send_message(EVENT_LOGS, log_message, parse_mode=ParseMode.HTML)
-        except BadRequest as excp:
+        except BadRequest:
             log = bot.send_message(
                 EVENT_LOGS,
                 log_message

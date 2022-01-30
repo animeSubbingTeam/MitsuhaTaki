@@ -20,19 +20,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
+
+from elaina import OWNER_ID
 from elaina import telethn as tbot
 from elaina.events import register
-import os
-import asyncio
-import os
-import time
-from datetime import datetime
-from elaina import OWNER_ID, DEV_USERS
-from elaina import TEMP_DOWNLOAD_DIRECTORY as path
-from elaina import TEMP_DOWNLOAD_DIRECTORY
-from datetime import datetime
-water = './elaina/resources/elaina.png'
+
+water = "./elaina/resources/elaina.png"
 client = tbot
+
 
 @register(pattern=r"^/send ?(.*)")
 async def Prof(event):
@@ -45,14 +41,14 @@ async def Prof(event):
     input_str = event.pattern_match.group(1)
     the_plugin_file = "./elaina/modules/{}.py".format(input_str)
     if os.path.exists(the_plugin_file):
-     message_id = event.message.id
-     await event.client.send_file(
-             event.chat_id,
-             the_plugin_file,
-             force_document=True,
-             allow_cache=False,
-             thumb=thumb,
-             reply_to=message_id,
-         )
+        message_id = event.message.id
+        await event.client.send_file(
+            event.chat_id,
+            the_plugin_file,
+            force_document=True,
+            allow_cache=False,
+            thumb=thumb,
+            reply_to=message_id,
+        )
     else:
         await event.reply("No File Found!")

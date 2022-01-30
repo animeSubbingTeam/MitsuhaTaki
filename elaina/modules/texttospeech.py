@@ -22,14 +22,7 @@
 
 import os
 
-from gtts import gTTS
-from gtts import gTTSError
-from telethon import *
-from telethon.tl import functions
-from telethon.tl import types
-from telethon.tl.types import *
-
-from elaina import *
+from gtts import gTTS, gTTSError
 
 from elaina import telethn as tbot
 from elaina.events import register

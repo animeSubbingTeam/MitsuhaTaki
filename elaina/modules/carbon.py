@@ -21,11 +21,13 @@
 # SOFTWARE.
 
 from platform import python_version as y
-from telegram import __version__ as o
+
 from pyrogram import __version__ as z
-from telethon import __version__ as s
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram import filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import __version__ as o
+from telethon import __version__ as s
+
 from elaina import pbot
 from elaina.utils.errors import capture_err
 from elaina.utils.functions import make_carbon
@@ -48,6 +50,7 @@ async def carbon_func(_, message):
 
 MEMEK = "https://telegra.ph/file/7482398e772bd21a1f2bb.jpg"
 
+
 @pbot.on_message(filters.command("repo"))
 async def repo(_, message):
     await message.reply_photo(
@@ -65,11 +68,9 @@ async def repo(_, message):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "Repo", url="https://github.com/ZenitsuPrjkt"), 
-                    InlineKeyboardButton(
-                        "Support", url="https://t.me/elainasupport")
+                    InlineKeyboardButton("Repo", url="https://github.com/ZenitsuPrjkt"),
+                    InlineKeyboardButton("Support", url="https://t.me/elainasupport"),
                 ]
             ]
-        )
+        ),
     )

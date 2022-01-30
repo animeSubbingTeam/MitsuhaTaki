@@ -21,36 +21,35 @@
 # SOFTWARE.
 
 import asyncio
+import json
 import logging
 import os
 import sys
-import json
-import asyncio
 import time
+from inspect import getfullargspec
+
 import spamwatch
 import telegram.ext as tg
-
-from inspect import getfullargspec
 from aiohttp import ClientSession
 from motor import motor_asyncio
 from odmantic import AIOEngine
-from Python_ARQ import ARQ
+from ptbcontrib.postgres_persistence import PostgresPersistence
 from pymongo import MongoClient
 from pymongo.errors import ServerSelectionTimeoutError
-from telethon import TelegramClient
-from telethon.sessions import StringSession
-from telethon.sessions import MemorySession
-from pyrogram.types import Message
 from pyrogram import Client, errors
-from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid, ChannelInvalid
-from pyrogram.types import Chat, User
-from ptbcontrib.postgres_persistence import PostgresPersistence
+from pyrogram.errors.exceptions.bad_request_400 import ChannelInvalid, PeerIdInvalid
+from pyrogram.types import Chat, Message, User
+from Python_ARQ import ARQ
+from telethon import TelegramClient
+from telethon.sessions import MemorySession, StringSession
 
 StartTime = time.time()
+
 
 def get_user_list(__init__, key):
     with open("{}/elaina/{}".format(os.getcwd(), __init__), "r") as json_file:
         return json.load(json_file)[key]
+
 
 # enable logging
 FORMAT = "[Elaina Robot] %(message)s"
@@ -61,10 +60,14 @@ logging.basicConfig(
     datefmt="[%X]",
 )
 logging.getLogger("pyrogram").setLevel(logging.INFO)
-logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLevel(logging.WARNING)
+logging.getLogger("ptbcontrib.postgres_persistence.postgrespersistence").setLevel(
+    logging.WARNING
+)
 
-LOGGER = logging.getLogger('[Elaina Robot]')
-LOGGER.info("Elaina is starting. | An Zenitsu Project Parts. | Licensed under Mit LICENSE.")
+LOGGER = logging.getLogger("[Elaina Robot]")
+LOGGER.info(
+    "Elaina is starting. | An Zenitsu Project Parts. | Licensed under Mit LICENSE."
+)
 LOGGER.info("Not affiliated to other anime or Villain in any way whatsoever.")
 LOGGER.info("Project maintained by: github.com/ZenitsuPrjkt (t.me/ZenitsuPrjkt)")
 
@@ -101,7 +104,7 @@ if ENV:
 
     try:
         WOLVES = {int(x) for x in os.environ.get("WOLVES", "").split()}
-    except ValueError: 
+    except ValueError:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
     try:
@@ -287,6 +290,7 @@ pbot = Client(
 apps = []
 apps.append(pbot)
 loop = asyncio.get_event_loop()
+
 
 async def get_entity(client, entity):
     entity_client = client

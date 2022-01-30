@@ -20,10 +20,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from elaina import telethn as tbot
-import os
-from elaina.events import register
 import secureme
+
+from elaina.events import register
 
 
 @register(pattern="^/encrypt ?(.*)")

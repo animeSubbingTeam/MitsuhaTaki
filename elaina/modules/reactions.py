@@ -22,10 +22,11 @@
 
 import random
 
-from elaina import dispatcher
-from elaina.modules.disable import DisableAbleCommandHandler
 from telegram import Update
 from telegram.ext import CallbackContext
+
+from elaina import dispatcher
+from elaina.modules.disable import DisableAbleCommandHandler
 
 reactions = [
     "( ͡° ͜ʖ ͡°)",

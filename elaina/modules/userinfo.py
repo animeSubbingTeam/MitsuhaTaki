@@ -21,48 +21,46 @@
 # SOFTWARE.
 
 import html
-import re
 import os
-import requests
-import datetime
-import platform
-import time
+import re
 
-from psutil import cpu_percent, virtual_memory, disk_usage, boot_time
-from platform import python_version
+import requests
+from telegram import (
+    MAX_MESSAGE_LENGTH,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    MessageEntity,
+    ParseMode,
+    Update,
+)
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext, CommandHandler
+from telegram.utils.helpers import escape_markdown, mention_html
+from telethon import events
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import ChannelParticipantsAdmins
-from telethon import events
 
-from telegram import MAX_MESSAGE_LENGTH, ParseMode, Update, MessageEntity, __version__ as ptbver, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CallbackContext, CommandHandler
-from telegram.ext.dispatcher import run_async
-from telegram.error import BadRequest
-from telegram.utils.helpers import escape_markdown, mention_html
-    
+import elaina.modules.sql.userinfo_sql as sql
 from elaina import (
-    DEV_USERS,
-    OWNER_ID,
-    DRAGONS,
     DEMONS,
+    DEV_USERS,
+    DRAGONS,
+    INFOPIC,
+    OWNER_ID,
     TIGERS,
     WOLVES,
-    INFOPIC,
     dispatcher,
     sw,
-    StartTime,
-    SUPPORT_CHAT,
+    telethn,
 )
 from elaina.__main__ import STATS, TOKEN, USER_INFO
-from elaina.modules.sql import SESSION
-import elaina.modules.sql.userinfo_sql as sql
 from elaina.modules.disable import DisableAbleCommandHandler
-from elaina.modules.sql.global_bans_sql import is_user_gbanned
-from elaina.modules.sql.afk_sql import is_afk, set_afk
-from elaina.modules.sql.users_sql import get_user_num_chats
 from elaina.modules.helper_funcs.chat_status import sudo_plus
 from elaina.modules.helper_funcs.extraction import extract_user
-from elaina import telethn
+from elaina.modules.sql.afk_sql import is_afk, set_afk
+from elaina.modules.sql.global_bans_sql import is_user_gbanned
+from elaina.modules.sql.users_sql import get_user_num_chats
+
 
 def no_by_per(totalhp, percentage):
     """
@@ -82,6 +80,7 @@ def get_percentage(totalhp, earnedhp):
     per_of_totalhp = 100 - matched_less * 100.0 / totalhp
     per_of_totalhp = str(int(per_of_totalhp))
     return per_of_totalhp
+
 
 def get_readable_time(seconds: int) -> str:
     count = 0
@@ -106,6 +105,7 @@ def get_readable_time(seconds: int) -> str:
     ping_time += ":".join(time_list)
 
     return ping_time
+
 
 def hpmanager(user):
     total_hp = (get_user_num_chats(user.id) + 10) * 10
@@ -187,18 +187,21 @@ def get_id(update: Update, context: CallbackContext):
 
     elif chat.type == "private":
         msg.reply_text(
-            f"Your id is <code>{chat.id}</code>.", parse_mode=ParseMode.HTML,
+            f"Your id is <code>{chat.id}</code>.",
+            parse_mode=ParseMode.HTML,
         )
 
     else:
         msg.reply_text(
-            f"This group's id is <code>{chat.id}</code>.", parse_mode=ParseMode.HTML,
+            f"This group's id is <code>{chat.id}</code>.",
+            parse_mode=ParseMode.HTML,
         )
 
 
 @telethn.on(
     events.NewMessage(
-        pattern="/ginfo ", from_users=(TIGERS or []) + (DRAGONS or []) + (DEMONS or []),
+        pattern="/ginfo ",
+        from_users=(TIGERS or []) + (DRAGONS or []) + (DEMONS or []),
     ),
 )
 async def group_info(event) -> None:
@@ -206,7 +209,8 @@ async def group_info(event) -> None:
     try:
         entity = await event.client.get_entity(chat)
         totallist = await event.client.get_participants(
-            entity, filter=ChannelParticipantsAdmins,
+            entity,
+            filter=ChannelParticipantsAdmins,
         )
         ch_full = await event.client(GetFullChannelRequest(channel=entity))
     except:
@@ -232,7 +236,6 @@ async def group_info(event) -> None:
         msg += f"\n• [{x.id}](tg://user?id={x.id})"
     msg += f"\n\n**Description**:\n`{ch_full.full_chat.about}`"
     await event.reply(msg)
-
 
 
 def gifid(update: Update, context: CallbackContext):
@@ -317,29 +320,20 @@ def info(update: Update, context: CallbackContext):
     except:
         pass  # don't crash if api is down somehow...
 
-    disaster_level_present = False
-
     if user.id == OWNER_ID:
         text += "\n\nThe Disaster level of this person is 'King'."
-        disaster_level_present = True
     elif user.id in DEV_USERS:
         text += "\n\nThis user is member of 'Prince'."
-        disaster_level_present = True
     elif user.id in DRAGONS:
         text += "\n\nThe Disaster level of this person is 'Emperor'."
-        disaster_level_present = True
     elif user.id in DEMONS:
         text += "\n\nThe Disaster level of this person is 'Governor'."
-        disaster_level_present = True
     elif user.id in TIGERS:
         text += "\n\nThe Disaster level of this person is 'Captain'."
-        disaster_level_present = True
     elif user.id in WOLVES:
         text += "\n\nThe Disaster level of this person is 'Soldier'."
-        disaster_level_present = True
     elif user.id == 1334185337:
-         text += "\n\nOwner Of A Bot. Queen Of @ZenitsuPrjkt. Bot Name Inspired From 'The Journey of Elaina'."
-         disaster_level_present = True
+        text += "\n\nOwner Of A Bot. Queen Of @ZenitsuPrjkt. Bot Name Inspired From 'The Journey of Elaina'."
 
     try:
         user_member = chat.get_member(user.id)
@@ -375,9 +369,11 @@ def info(update: Update, context: CallbackContext):
                     [
                         [
                             InlineKeyboardButton(
-                                "Health", url="https://t.me/KennedyProject/44"),
+                                "Health", url="https://t.me/KennedyProject/44"
+                            ),
                             InlineKeyboardButton(
-                                "Disaster", url="https://t.me/KennedyProject/43")
+                                "Disaster", url="https://t.me/KennedyProject/43"
+                            ),
                         ],
                     ]
                 ),
@@ -388,24 +384,27 @@ def info(update: Update, context: CallbackContext):
         # Incase user don't have profile pic, send normal text
         except IndexError:
             message.reply_text(
-                text, 
+                text,
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
                             InlineKeyboardButton(
-                                "Health", url="https://t.me/KennedyProject/44"),
+                                "Health", url="https://t.me/KennedyProject/44"
+                            ),
                             InlineKeyboardButton(
-                                "Disaster", url="https://t.me/KennedyProject/43")
+                                "Disaster", url="https://t.me/KennedyProject/43"
+                            ),
                         ],
                     ]
                 ),
                 parse_mode=ParseMode.HTML,
-                disable_web_page_preview=True
+                disable_web_page_preview=True,
             )
 
     else:
         message.reply_text(
-            text, parse_mode=ParseMode.HTML,
+            text,
+            parse_mode=ParseMode.HTML,
         )
 
     rep.delete()
@@ -465,18 +464,19 @@ def set_about_me(update: Update, context: CallbackContext):
                 ),
             )
 
+
 @sudo_plus
 def stats(update: Update, context: CallbackContext):
-    stats = "<b>Current Elaina Statistics</b>\n" + "\n".join([mod.__stats__() for mod in STATS])
+    stats = "<b>Current Elaina Statistics</b>\n" + "\n".join(
+        [mod.__stats__() for mod in STATS]
+    )
     result = re.sub(r"(\d+)", r"<code>\1</code>", stats)
     result += "\n<b>Powered By Zenitsu Prjkt</b>"
     update.effective_message.reply_text(
-        result,
-        parse_mode=ParseMode.HTML, 
-        disable_web_page_preview=True
-   )
-        
-        
+        result, parse_mode=ParseMode.HTML, disable_web_page_preview=True
+    )
+
+
 def about_bio(update: Update, context: CallbackContext):
     bot, args = context.bot, context.args
     message = update.effective_message
@@ -529,7 +529,8 @@ def set_about_bio(update: Update, context: CallbackContext):
 
         text = message.text
         bio = text.split(
-            None, 1,
+            None,
+            1,
         )  # use python's maxsplit to only remove the cmd, hence keeping newlines.
 
         if len(bio) == 2:
@@ -541,7 +542,8 @@ def set_about_bio(update: Update, context: CallbackContext):
             else:
                 message.reply_text(
                     "Bio needs to be under {} characters! You tried to set {}.".format(
-                        MAX_MESSAGE_LENGTH // 4, len(bio[1]),
+                        MAX_MESSAGE_LENGTH // 4,
+                        len(bio[1]),
                     ),
                 )
     else:

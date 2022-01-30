@@ -20,38 +20,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import time
-import os
 import re
-import codecs
-from typing import List
 from random import randint
-from elaina.modules.helper_funcs.chat_status import user_admin
-from elaina.modules.disable import DisableAbleCommandHandler
-from elaina import (
-    dispatcher,
-    WALL_API,
-)
+
 import requests as r
 import wikipedia
-from requests import get, post
 from telegram import (
-    Chat,
     ChatAction,
-    Update,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     ParseMode,
-    Message,
-    MessageEntity,
-    TelegramError,
+    Update,
 )
 from telegram.error import BadRequest
-from telegram.ext.dispatcher import run_async
-from telegram.ext import CallbackContext, Filters, CommandHandler
-from elaina import StartTime
-from elaina.modules.helper_funcs.chat_status import sudo_plus
-from elaina.modules.helper_funcs.alternate import send_action, typing_action
+from telegram.ext import CallbackContext, CommandHandler, Filters
+
+from elaina import WALL_API, dispatcher
+from elaina.modules.disable import DisableAbleCommandHandler
+from elaina.modules.helper_funcs.alternate import send_action
+from elaina.modules.helper_funcs.chat_status import user_admin
 
 MARKDOWN_HELP = f"""
 Markdown is a very powerful formatting tool supported by telegram. {dispatcher.bot.first_name} has some enhancements, to make sure that \
@@ -215,7 +202,8 @@ __help__ = """
 """
 
 ECHO_HANDLER = DisableAbleCommandHandler(
-    "echo", echo, filters=Filters.chat_type.groups, run_async=True)
+    "echo", echo, filters=Filters.chat_type.groups, run_async=True
+)
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, run_async=True)
 WIKI_HANDLER = DisableAbleCommandHandler("wiki", wiki)
 WALLPAPER_HANDLER = DisableAbleCommandHandler("wall", wall, run_async=True)
@@ -224,7 +212,7 @@ dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(WIKI_HANDLER)
 dispatcher.add_handler(WALLPAPER_HANDLER)
- 
+
 __mod_name__ = "Extras"
 __command_list__ = ["id", "echo", "wiki", "wall"]
 __handlers__ = [

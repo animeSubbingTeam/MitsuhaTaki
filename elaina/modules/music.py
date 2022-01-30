@@ -21,23 +21,22 @@
 # SOFTWARE.
 
 from __future__ import unicode_literals
+
 import asyncio
-import math
-import io
 import os
 import time
-import requests
+from urllib.parse import urlparse
+
 import wget
 import yt_dlp
-from urllib.parse import urlparse
 from pyrogram import filters
 from pyrogram.types import Message
-from tswift import Song
-from yt_dlp import YoutubeDL
-from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
+from yt_dlp import YoutubeDL
+
+from elaina import arq, pbot
 from elaina.utils.pluginhelper import get_text, progress
-from elaina import pbot, arq
+
 
 async def lyrics_func(answers, text):
     song = await arq.lyrics(text)
@@ -46,9 +45,7 @@ async def lyrics_func(answers, text):
             InlineQueryResultArticle(
                 title="Error",
                 description=song.result,
-                input_message_content=InputTextMessageContent(
-                    song.result
-                ),
+                input_message_content=InputTextMessageContent(song.result),
             )
         )
         return answers
@@ -102,9 +99,7 @@ def download_youtube_audio(url: str):
             os.remove(audio_file)
             audio_file = audio_file_opus
         thumbnail_url = info_dict["thumbnail"]
-        thumbnail_file = (
-            basename + "." + get_file_extension_from_url(thumbnail_url)
-        )
+        thumbnail_file = basename + "." + get_file_extension_from_url(thumbnail_url)
         title = info_dict["title"]
         performer = info_dict["uploader"]
         duration = int(float(info_dict["duration"]))
@@ -148,7 +143,7 @@ async def ytmusic(client, message: Message):
     try:
         with YoutubeDL(opts) as ytdl:
             infoo = ytdl.extract_info(url, False)
-            duration = round(infoo["duration"] / 60)
+            round(infoo["duration"] / 60)
             ytdl_data = ytdl.extract_info(url, download=True)
 
     except Exception as e:

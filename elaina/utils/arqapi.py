@@ -20,21 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import json
-import sys
-from random import randint
-from time import time
 
-import aiohttp
-from elaina import aiohttpsession 
 from aiohttp import ClientSession
-
-from google_trans_new import google_translator
 from Python_ARQ import ARQ
-from search_engine_parser import GoogleSearch
 
-from elaina import BOT_ID, OWNER_ID, ARQ_API_URL, ARQ_API_KEY
-from elaina import pbot
+from elaina import ARQ_API_KEY, ARQ_API_URL, OWNER_ID, aiohttpsession, pbot
 
 ARQ_API = "JPEUYT-CRVVLK-DJYIMG-MRCMME-ARQ"
 ARQ_API_KEY = "JPEUYT-CRVVLK-DJYIMG-MRCMME-ARQ"
@@ -49,4 +39,3 @@ print("[INFO]: INITIALIZING ARQ CLIENT")
 arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiohttpsession)
 
 app = pbot
-import socket

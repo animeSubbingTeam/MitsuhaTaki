@@ -22,8 +22,9 @@
 
 import threading
 
-from elaina.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, distinct, func
+
+from elaina.modules.sql import BASE, SESSION
 
 
 class GroupLogs(BASE):

@@ -20,8 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import importlib
 import collections
+import importlib
+
+from telegram import ParseMode, Update
+from telegram.ext import CallbackContext, CommandHandler
 
 from elaina import dispatcher, telethn
 from elaina.__main__ import (
@@ -36,8 +39,6 @@ from elaina.__main__ import (
     USER_SETTINGS,
 )
 from elaina.modules.helper_funcs.chat_status import dev_plus, sudo_plus
-from telegram import ParseMode, Update
-from telegram.ext import CallbackContext, CommandHandler
 
 
 @dev_plus
