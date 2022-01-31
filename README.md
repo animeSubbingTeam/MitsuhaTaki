@@ -17,8 +17,6 @@
 <a href="https://GitHub.com/ZenitsuPrjkt/ElainaRobot"> <img src="https://img.shields.io/badge/Maintained-brightgreen.svg" alt="Maintenance" /> </a><br>
 <a href="https://github.com/ZenitsuPrjkt/ElainaRobot/blob/main/LICENSE"> <img src="https://img.shields.io/badge/MIT-License-blue.svg" alt="License" /> </a>
 <a href="https://makeapullrequest.com"> <img src="https://img.shields.io/badge/PRs-Welcome-blue.svg?style=flat-round" alt="PRs" /> </a>
-<a href="https://deepsource.io/gh/ZenitsuPrjkt/ElainaRobot/?ref=repository-badge}" target="_blank"><img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/ZenitsuPrjkt/ElainaRobot.svg/?label=active+issues&show_trend=true&token=RYYx_QApuuAWUMpqD_4iHZ5m"/></a>
-<a href="https://deepsource.io/gh/ZenitsuPrjkt/ElainaRobot/?ref=repository-badge}" target="_blank"><img alt="DeepSource" title="DeepSource" src="https://deepsource.io/gh/ZenitsuPrjkt/ElainaRobot.svg/?label=resolved+issues&show_trend=true&token=RYYx_QApuuAWUMpqD_4iHZ5m"/></a>	
 </p>
 
 
