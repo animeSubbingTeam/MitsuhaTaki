@@ -19,10 +19,7 @@
 <a href="https://makeapullrequest.com"> <img src="https://img.shields.io/badge/PRs-Welcome-blue.svg?style=flat-round" alt="PRs" /> </a>
 </p>
 
-
 A modular telegram Python bot running on python3 with an sqlalchemy, mongodb database.
-
-![Alt](https://repobeats.axiom.co/api/embed/14f3ae8bd55c2c7a27a6c209ea7f8b82307949fb.svg "Repobeats analytics image")
 
 <details>
 	<summary>Credit's</summary>
@@ -42,3 +39,19 @@ A modular telegram Python bot running on python3 with an sqlalchemy, mongodb dat
 <a href="https://github.com/Paul Larsen"> <img src="https://img.shields.io/badge/Paul Larsen-Github-magenta?style=for-the-badge&logo=github" alt="Paul Larsen Github" /> </a>
 </h1>
 
+### Environment Variables
+
+| Name         | Description                                                                            | Required |
+| ------------ | -------------------------------------------------------------------------------------- | -------- |
+| API_ID       | Your telegram app's API_ID. Get it from https://my.telegram.org/apps                   | True     |
+| API_HASH     | Your telegram app's API_HASH. Get it from https://my.telegram.org/apps                 | True     |
+| TOKEN    | Bot Token from [@BotFather](https://telegram.dog/BotFather)                                | True     |
+| LOG_CHANNEL  | Your user ID as an integer                                                             | True     |
+| HEROKU_API_KEY    | Your Heroku API key, get it from 'https://dashboard.heroku.com/account            | True     |
+| BOT_USERNAME | username of your bot without the @                                                     | True     |
+| SUPPORT_CHAT    | Your Telegram support group chat username where your users will go and bother you with shit But be like: MyGroupChatUsernameBlah. If this ever points to masha support than consider you made an enemy                   | True     |
+| MONGO_DB_URI    | Required for database connections    | True     |
+| STRING_SESSION | Fill with telethon string session    | True     |
+
+
+![Alt](https://repobeats.axiom.co/api/embed/14f3ae8bd55c2c7a27a6c209ea7f8b82307949fb.svg "Repobeats analytics image")
