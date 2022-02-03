@@ -1,7 +1,3 @@
-<h1 align="center">
-    [ Elaina Robot ]
-</h1>
-
 <p align="center">
   <img src="https://telegra.ph/file/6296362aa02e1f4dbb200.jpg">
 </p>
@@ -21,6 +17,23 @@
 
 A modular telegram Python bot running on python3 with an sqlalchemy, mongodb database.
 
+## How to setup
+
+First Step!
+- Star **⭐** the repository!!
+
+It really motivates me to continue this project further.
+
+### Deploy to Heroku
+- Get your `API_ID` and `API_HASH` from [here](https://my.telegram.org/)
+- Get your Bot Token from [@BotFather](https://t.me/BotFather)
+
+**Note:** By default the bot uses the default heroku-20 stack.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ZenitsuPrjkt/ElainaRobot)
+
+![Alt](https://repobeats.axiom.co/api/embed/14f3ae8bd55c2c7a27a6c209ea7f8b82307949fb.svg "Repobeats analytics image")
+
 <details>
 	<summary>Credit's</summary>
 	<br>
@@ -39,19 +52,3 @@ A modular telegram Python bot running on python3 with an sqlalchemy, mongodb dat
 <a href="https://github.com/Paul Larsen"> <img src="https://img.shields.io/badge/Paul Larsen-Github-magenta?style=for-the-badge&logo=github" alt="Paul Larsen Github" /> </a>
 </h1>
 
-### Environment Variables
-
-| Name         | Description                                                                            | Required |
-| ------------ | -------------------------------------------------------------------------------------- | -------- |
-| API_ID       | Your telegram app's API_ID. Get it from https://my.telegram.org/apps                   | True     |
-| API_HASH     | Your telegram app's API_HASH. Get it from https://my.telegram.org/apps                 | True     |
-| TOKEN    | Bot Token from [@BotFather](https://telegram.dog/BotFather)                                | True     |
-| LOG_CHANNEL  | Your user ID as an integer                                                             | True     |
-| HEROKU_API_KEY    | Your Heroku API key, get it from 'https://dashboard.heroku.com/account            | True     |
-| BOT_USERNAME | username of your bot without the @                                                     | True     |
-| SUPPORT_CHAT    | Your Telegram support group chat username where your users will go and bother you with shit But be like: MyGroupChatUsernameBlah. If this ever points to masha support than consider you made an enemy                   | True     |
-| MONGO_DB_URI    | Required for database connections    | True     |
-| STRING_SESSION | Fill with telethon string session    | True     |
-
-
-![Alt](https://repobeats.axiom.co/api/embed/14f3ae8bd55c2c7a27a6c209ea7f8b82307949fb.svg "Repobeats analytics image")
