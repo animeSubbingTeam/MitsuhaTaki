@@ -30,7 +30,7 @@ It really motivates me to continue this project further.
 
 **Note:** By default the bot uses the default heroku-20 stack.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ZenitsuPrjkt/ElainaRobot)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/animeSubbingTeam/MitsuhaTaki)
 
 ![Alt](https://repobeats.axiom.co/api/embed/14f3ae8bd55c2c7a27a6c209ea7f8b82307949fb.svg "Repobeats analytics image")
 
